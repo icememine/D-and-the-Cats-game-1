@@ -30,11 +30,6 @@ dialog h3{font-size:14px;font-weight:500;color:var(--gold);margin:16px 0 4px}.st
 .tree{display:grid;grid-template-columns:1fr 1fr;gap:12px}.branch{display:flex;flex-direction:column;gap:6px;min-width:0}.branch h3{margin:0 0 2px}
 .node{border:1px solid var(--line);background:#0e2233;padding:7px 9px;font-size:12px;color:#bcd1dc;display:flex;flex-direction:column;gap:3px}.node b{color:#e6e9e4;font-weight:600;font-size:13px}.node b small{color:var(--muted);font-weight:400}.node.learned{border-color:var(--mint)}.node.learned b{color:var(--mint)}.node.locked{opacity:.5}.node button{align-self:flex-start;padding:3px 10px;font-size:11px}
 .set-line{color:#7ee08a}
-/* One-thumb mode (Hầm Ma on phones): no joystick; tap the floor to walk, a radial holds the skills. */
-.thumb-hint{margin:0;font-size:11px;color:var(--muted);max-width:150px;align-self:center}
-.thumb #touch-controls .joystick-area,.thumb #touch-controls .touch-middle,.thumb #touchSecondary{display:none!important}
-.radial{position:absolute;right:0;bottom:calc(100% + 8px);z-index:6;display:grid;grid-template-columns:repeat(4,52px);gap:6px;padding:8px;background:#071321f0;border:1px solid var(--line);border-radius:14px;pointer-events:auto}
-.radial button{width:52px;height:52px;border-radius:50%;font-size:11px;padding:0;background:#142a3be8}.radial button:disabled{opacity:.35}
 
 /* Hầm Ma screen: the world fills the window; status lives on the canvas, actions are icon buttons on top. */
 body.dungeon{padding:0}.dungeon #game{width:100%;max-width:none;height:100dvh;border:0;display:flex;flex-direction:column}
@@ -54,9 +49,9 @@ body.dungeon{padding:0}.dungeon #game{width:100%;max-width:none;height:100dvh;bo
 .dsmall{width:46px;height:46px}
 .duse{position:absolute;left:50%;bottom:104px;transform:translateX(-50%);padding:8px 22px;border-radius:8px;border:2px solid #b08a4a;background:#2a1d12e8;color:#ffe5ad;font-size:14px;letter-spacing:.5px;box-shadow:0 3px 10px #0008;white-space:nowrap}
 .dstick{position:absolute;left:14px;bottom:100px}.dstick #joystick{width:112px;height:112px;background-color:#0b2236a0}.dstick #stick{width:48px;height:48px}
-.thumb .dstick{display:none}
 @media(max-width:520px){.dskills{gap:6px;padding:6px 8px;bottom:18px}.dskill{width:46px;height:46px}.dskill[data-skill=flash]{width:54px;height:54px}.dside{right:8px;bottom:92px;gap:8px}.dsmall{width:40px;height:40px}.duse{bottom:92px;font-size:13px}.dbtn kbd{display:none}.dungeon #speech{bottom:140px}}
 @media(pointer:coarse){.dbtn kbd{display:none}}
-@media(pointer:fine){.dstick{display:none}}
+/* The joystick is always there but barely visible until a thumb is on it. */
+.dstick{opacity:.1;transition:opacity .15s}.dstick:has(.held),.dstick:hover{opacity:.85}
 @media(max-width:520px){.dungeon #speech{left:10px;right:62px;transform:none;width:auto;max-width:none}}
 .dbtn,.dbtn:hover,.dbtn:focus{background-color:#1d150e;background-repeat:no-repeat!important;background-position:center!important;background-size:62%!important}.dbtn:hover{border-color:#ffd36b}

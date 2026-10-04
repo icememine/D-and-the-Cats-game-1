@@ -60,8 +60,9 @@ A haunted-house game with three ways to play:
   and blue battery bars with numbers, a level badge and status icons (keys, stamp, Vé 000, coins,
   skill points), with the quest under them. Top right: minimap. Bottom: round skill icons; right
   side: bánh bao, pin AA, Zin, skill tree and bag; a contextual action button above the skill bar.
-- **One-thumb phone mode:** default on touch screens, switchable in Pause. No joystick: tap the floor
-  to walk, tap a performer to attack, and the flashlight fires by itself at anyone in reach.
+- **Controls:** the joystick is always there, bottom left, at 10% opacity until a thumb is on it;
+  tapping the floor still walks there. The one setting is **Tự đánh** (auto-fight, in Pause): the
+  flashlight fires by itself at anyone in reach. On by default on touch screens.
 - **Floors:** each floor rolls its look at random (Hầm Mộ, Nghĩa Địa, Phòng Ăn, Hành Lang); boss
   floors are always Địa Ngục. Bosses rotate by act of three floors (Xác Sống, Ma Cà Rồng, Ma Cổ Dài),
   and each act holds one Vé 000 fragment.

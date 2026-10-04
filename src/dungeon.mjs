@@ -423,7 +423,7 @@ export class Dungeon{
   else if(p.target){const e=this.enemies.find(e=>e.id===p.target&&e.state!=='defeated');if(!e)p.target=null;else{const gap=dist(e,p);p.face=Math.atan2(e.y-p.y,e.x-p.x);if(gap>120||!lineOfSight(f,p,e)){moveCircle(f,p,Math.cos(p.face)*d.speed*dt,Math.sin(p.face)*d.speed*dt);p.moving=true;}else this.cast('flash');}}
   else if(p.path.length){const t=p.path[0],gap=dist(p,t);if(gap<5)p.path.shift();else{p.face=Math.atan2(t.y-p.y,t.x-p.x);const s=Math.min(gap,d.speed*dt);p.moving=moveCircle(f,p,Math.cos(p.face)*s,Math.sin(p.face)*s);if(!p.moving)p.path.shift();}}
   if(p.pickTarget){const it=this.drops.find(x=>x.id===p.pickTarget);if(!it)p.pickTarget=null;else if(dist(it,p)<44){this.collect(it);p.pickTarget=null;p.path=[];}}
-  // One-thumb play: the flashlight fires by itself at the closest performer in reach.
+  // Auto-fight: the flashlight fires by itself at the closest performer in reach.
   if(this.autoAttack&&p.dash<=0&&this.cooldowns.flash<=0){const e=this.live().filter(e=>dist(e,p)<140&&lineOfSight(f,p,e)).sort((a,b)=>dist(a,p)-dist(b,p))[0];if(e)this.cast('flash',{x:e.x,y:e.y-10});}
   this.reveal();
   // Coins and potions are picked up just by walking over them.
