@@ -1,0 +1,10 @@
+{
+  "image": "actors.png",
+  "anchor": "bottom-center",
+  "sprites": [
+    { "index": 0, "name": "player", "x": 192, "y": 80, "w": 291, "h": 639 },
+    { "index": 1, "name": "na", "x": 639, "y": 115, "w": 339, "h": 606 },
+    { "index": 2, "name": "bo", "x": 1122, "y": 115, "w": 239, "h": 606 },
+    { "index": 3, "name": "vampire", "x": 1477, "y": 36, "w": 499, "h": 685 }
+  ]
+}
