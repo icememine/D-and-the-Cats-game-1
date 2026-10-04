@@ -123,16 +123,20 @@ test('dashing makes you untouchable', () => {
   assert.equal(d.hurt(10), true);
 });
 
-test('running out of courage sends you back to the floor start with your items, minus some coins', () => {
+test('fainting ends the descent: found loot and found coins stay behind, gear and old coins are kept', () => {
   const d = new Dungeon(8); clearFloor(d);
   d.p.gold = 100; const torch = d.equipped.torch;
-  d.p.x += 200;
+  const old = {slot: 'hat', rarity: 'common', name: 'Mũ cũ', ilvl: 1, stats: {}, base: {courage: 1}, affixes: [], value: 1};
+  d.inventory.push(old);
+  d.drops.push({id: 901, kind: 'gold', amount: 30, x: d.p.x, y: d.p.y}, {id: 902, kind: 'item', item: {...old, name: 'Mũ mới'}, x: d.p.x, y: d.p.y});
+  d.collect(d.drops[0]); d.collect(d.drops[0]);
+  assert.equal(d.p.gold, 130);
   d.hurt(999);
-  assert.equal(d.p.gold, 90);
-  assert.equal(d.p.x, d.floor.start.x);
-  assert.equal(d.p.courage, d.derived.maxCourage);
+  assert.equal(d.ending, 'faint');
+  assert.equal(d.p.gold, 100, 'the 30 coins found this descent are lost');
+  assert.deepEqual(d.inventory.map(i => i.name), ['Mũ cũ']);
+  assert.deepEqual(d.lost, {items: ['Mũ mới'], gold: 30});
   assert.equal(d.equipped.torch, torch);
-  assert.equal(d.ending, null);
 });
 
 test('coins are picked up by walking over them; gear needs a pick-up', () => {

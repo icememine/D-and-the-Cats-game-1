@@ -1,9 +1,10 @@
 // Hầm Ma: the action-RPG visitor mode. Procedural floors, packs of ghost performers, loot, levels.
 // "Fighting" means breaking a performer's act: knock their Composure to 0 and they crack up laughing,
-// drop what they carry and leave. Running out of Courage never kills you: Mr. D walks you back to the
-// start of the floor. No browser dependencies, so the rules can be tested headless.
+// drop what they carry and leave. Running out of Courage never kills you, but Mr. D carries you out and
+// everything you found on this descent and didn't put on stays behind: go deeper, or go home with a
+// Vé về. No browser dependencies, so the rules can be tested headless.
 
-import {rank,skillPoints,learn,RESPEC_COST,SETS,setBonuses,costumeStat,hasGadget,emptyTown,FRAGMENT_CHANCE,ZIN_DURATION} from './progression.mjs';
+import {rank,skillPoints,learn,RESPEC_COST,SETS,setBonuses,costumeStat,hasGadget,emptyTown,FRAGMENT_CHANCE,ZIN_DURATION,GEMS,emptyGems,socketsFor,SUPPLIES,isRestStop,identifyItem} from './progression.mjs';
 
 export const TILE=32;
 export const MAP_W=64;
@@ -121,13 +122,14 @@ export const RARITY=[
  {id:'legendary',name:'Huyền thoại',affixes:4,weight:2},
 ];
 export const SLOTS={
- torch:{label:'Đèn',bases:['Đèn pin','Đèn đội đầu','Đèn bão']},
- coat:{label:'Áo',bases:['Áo khoác','Áo mưa','Áo hoodie']},
- charm:{label:'Bùa',bases:['Bùa hộ mệnh','Móc khóa','Vòng tay']},
- shoes:{label:'Giày',bases:['Giày bata','Dép tổ ong','Giày thể thao']},
- hat:{label:'Mũ',bases:['Mũ lưỡi trai','Mũ len','Nón lá']},
- bag:{label:'Túi',bases:['Ba lô','Túi đeo chéo','Túi vải']},
- badge:{label:'Huy hiệu',bases:['Huy hiệu','Ghim cài','Thẻ nhân viên']},
+ // `body` is where it is worn, shown on the gear screen so players know what goes where.
+ hat:{label:'Mũ',body:'Đầu',bases:['Mũ lưỡi trai','Mũ len','Nón lá']},
+ charm:{label:'Dây chuyền',body:'Cổ',bases:['Bùa hộ mệnh','Dây chuyền','Mặt dây ngọc']},
+ badge:{label:'Huy hiệu',body:'Ngực',bases:['Huy hiệu','Ghim cài','Thẻ nhân viên']},
+ torch:{label:'Đèn',body:'Tay',bases:['Đèn pin','Đèn đội đầu','Đèn bão']},
+ coat:{label:'Áo',body:'Thân',bases:['Áo khoác','Áo mưa','Áo hoodie']},
+ bag:{label:'Túi',body:'Lưng',bases:['Ba lô','Túi đeo chéo','Túi vải']},
+ shoes:{label:'Giày',body:'Chân',bases:['Giày bata','Dép tổ ong','Giày thể thao']},
 };
 const AFFIXES={
  dmgPct:{label:v=>`+${v}% sát thương`,roll:(r,l)=>Math.round(5+r()*8+l),word:'Chói Lóa'},
@@ -156,10 +158,10 @@ export function makeItem(rand,ilvl,bias=0,slot=null){
  const base=BASE_STAT[slot](ilvl),stats={...base},pool=Object.keys(AFFIXES).filter(k=>!AFFIXES[k].cond),affixes=[];
  const conds=Object.keys(AFFIXES).filter(k=>AFFIXES[k].cond&&(!AFFIXES[k].legendary||rarity.id==='legendary'));
  for(let i=0;i<rarity.affixes;i++){const cond=i===rarity.affixes-1&&(rarity.id==='legendary'||rarity.id==='rare'&&rand()<.5);const from=cond?conds:pool;const k=from.splice(Math.floor(rand()*from.length),1)[0];const v=AFFIXES[k].roll(rand,ilvl);stats[k]=(stats[k]||0)+v;affixes.push([k,v]);}
- const baseName=SLOTS[slot].bases[Math.floor(rand()*SLOTS[slot].bases.length)];
+ const style=Math.floor(rand()*SLOTS[slot].bases.length),baseName=SLOTS[slot].bases[style];
  const name=rarity.id==='legendary'?LEGENDARY_NAMES[slot]:affixes.length?`${baseName} ${AFFIXES[affixes[0][0]].word}`:baseName;
  const value=Math.round((6+ilvl*3)*(1+RARITY.indexOf(rarity)*1.5));
- return{slot,rarity:rarity.id,rarityName:rarity.name,name,ilvl,stats,base,affixes:affixes.map(([k,v])=>AFFIXES[k].label(v)),value};
+ return{slot,style,rarity:rarity.id,rarityName:rarity.name,name,ilvl,stats,base,affixes:affixes.map(([k,v])=>AFFIXES[k].label(v)),value};
 }
 // A boss set piece: its theme's named item for a slot, with two affixes.
 export function makeSetItem(rand,ilvl,setId,slot=null){
@@ -187,7 +189,7 @@ export class Dungeon{
  constructor(seed=Date.now()%100000){
   this.seed=seed;this.rand=rng(seed*7+3);this.time=0;this.ending=null;this.bubble=null;this.floaters=[];this.effects=[];
   this.p={x:0,y:0,r:11,face:0,moving:false,level:1,xp:0,gold:0,courage:100,battery:100,dash:0,dashDir:0,hurt:0,path:[],target:null,pickTarget:null};
-  this.potions={bread:2,battery:1};this.keys=0;
+  this.potions={bread:2,battery:1,ticket:1,lens:0};this.keys=0;this.gems=emptyGems();this.runGold=0;this.lost=null;this.checkpoint=1;
   this.companions=[makeCompanion('na'),makeCompanion('bo')];this.inventory=[];this.equipped={torch:null,coat:null,charm:null,shoes:null,hat:null,bag:null,badge:null};
   this.tree={};this.town=emptyTown();this.fragments=[];this.zinState=null;this.zinFloorDone=false;this.zin=null;this.zinUsed=false;this.autoAttack=false;
   this.cooldowns={flash:0,candy:0,bell:0,spotlight:0,dash:0,potion:0};
@@ -227,7 +229,7 @@ export class Dungeon{
   for(const c of this.companions)this.regroup(c,true);
   this.enemies=[];this.projectiles=[];this.drops=[];this.marks=[];this.effects=[];this.floaters=[];this.field=null;this.fieldAt=-1;this.nextId=1;
   this.stampFound=false;this.bossBroken=false;this.zin=null;this.zinUsed=false;
-  this.vendor=depth%3===1?{x:st.x+70,y:st.y-30}:null;
+  this.vendor=isRestStop(depth)?{x:st.x+70,y:st.y-30}:null;if(isRestStop(depth))this.checkpoint=Math.max(this.checkpoint,depth);
   const scale=scaleFor(depth),theme=f.theme,boss=isBossFloor(depth);
   // The key only appears on a boss floor if you arrive without one, so you can never be stuck.
   const keyHere=!boss||this.keys===0;
@@ -285,7 +287,9 @@ export class Dungeon{
  }
  usePotion(kind){
   if(this.ending||this.cooldowns.potion>0)return false;
-  if(!this.potions[kind]){this.notice(kind==='bread'?'Hết bánh bao. Mua thêm ở quầy Mr. D.':'Hết pin AA.');return false;}
+  if(!this.potions[kind]){this.notice({bread:'Hết bánh bao. Mua thêm ở quầy Mr. D.',battery:'Hết pin AA.',ticket:'Hết Vé về. Mr. D bán ở trạm nghỉ (60 xu).',lens:'Hết Kính lúp.'}[kind]);return false;}
+  if(kind==='lens'){const it=this.inventory.find(i=>i.unid);if(!it){this.notice('Không có món nào cần giám định.');return false;}this.potions.lens--;identifyItem(null,it,{free:true});this.notice(`Kính lúp: đó là ${it.name} (${it.rarityName})!`);return true;}
+  if(kind==='ticket'){this.potions.ticket--;this.finish('Vé về: Mr. D kéo bạn lên an toàn. Mọi thứ nhặt được đều giữ lại.');return true;}
   const d=this.derived;this.potions[kind]--;this.cooldowns.potion=1;
   if(kind==='bread'){this.p.courage=Math.min(d.maxCourage,this.p.courage+d.maxCourage*.45);this.float(this.p.x,this.p.y-70,'+can đảm','#f3889c');}
   else{this.p.battery=Math.min(d.maxBattery,this.p.battery+60);this.float(this.p.x,this.p.y-70,'+pin','#e7c083');}
@@ -309,11 +313,13 @@ export class Dungeon{
    if(this.stairsLocked){this.notice(isBossFloor(this.depth)?`Cầu thang khóa. Hạ màn ${ENEMIES[f.boss].name} trước.`:`Cầu thang bị niêm phong. Tìm con dấu tầng ${this.depth}.`);return true;}
    if(this.fragments.length>=3&&!this.zinFloorDone&&!this.zinState)this.enterZinFloor();else this.enterFloor(this.depth+1);return true;
   }
-  if(dist(f.exitUp,p)<46){this.finish();return true;}
+  if(dist(f.exitUp,p)<46){if(isRestStop(this.depth)){this.finish();return true;}this.notice('Thang lên bị sập ở tầng này. Dùng Vé về, hoặc tới trạm nghỉ của Mr. D (tầng 4, 7, 10…).');return true;}
   if(this.vendor&&dist(this.vendor,p)<56)return'shop';
   this.notice('Không có gì để dùng ở đây.');return false;
  }
- finish(){this.ending='dungeon';this.notice('Bạn leo lên khỏi hầm.');}
+ // Leaving safely banks everything found on this descent.
+ bank(){for(const it of [...this.inventory,...Object.values(this.equipped)])if(it)delete it.found;this.runGold=0;}
+ finish(text='Bạn leo lên khỏi hầm.'){this.bank();this.ending='dungeon';this.notice(text);}
  // ---- Zin (Khách Số 0)
  get canCallZin(){return this.fragments.length>0&&this.zinState!=='gone'&&!this.zinUsed&&!this.zin&&!this.ending&&this.floor.special!=='zin';}
  // Once per floor Zin steps in: full courage, a stun wave, then 12 s of help as strong as you, Na and Bơ together.
@@ -343,22 +349,25 @@ export class Dungeon{
   this.float(f.start.x,f.start.y-60,'TẦNG 000','#cfe8ff',16);this.notice('Zin: “Còn một phòng nữa mà…” Vé 000 thiếu một dấu mộc cuối cùng.');
  }
  finishZin(choice){
-  this.zinFloorDone=true;this.zinState=choice==='ticket'?'gone':'staff';this.ending=choice;
+  this.zinFloorDone=true;this.zinState=choice==='ticket'?'gone':'staff';this.bank();this.ending=choice;
   this.notice(choice==='ticket'?'Zin: “Lâu quá…” Dấu mộc cuối cùng. Zin mỉm cười rồi tan đi.':'Mr. D ghi vào bảng phân ca: “Đứa này khỏi cần phát đồng phục.”');
  }
  // ---- Inventory
- equip(item,silent=false){const old=this.equipped[item.slot];this.equipped[item.slot]=item;const i=this.inventory.indexOf(item);if(i>=0)this.inventory.splice(i,1);if(old)this.inventory.push(old);const d=this.derived;this.p.courage=Math.min(this.p.courage,d.maxCourage);this.p.battery=Math.min(this.p.battery,d.maxBattery);if(!silent)this.notice(`Đã trang bị ${item.name}.`);}
+ equip(item,silent=false){if(item.unid){if(!silent)this.notice('Món này chưa giám định. Dùng Kính lúp hoặc nhờ Mr. D.');return'unid';}delete item.found;const old=this.equipped[item.slot];this.equipped[item.slot]=item;const i=this.inventory.indexOf(item);if(i>=0)this.inventory.splice(i,1);if(old)this.inventory.push(old);const d=this.derived;this.p.courage=Math.min(this.p.courage,d.maxCourage);this.p.battery=Math.min(this.p.battery,d.maxBattery);if(!silent)this.notice(`Đã trang bị ${item.name}.`);}
  dropItem(item){const i=this.inventory.indexOf(item);if(i<0)return;this.inventory.splice(i,1);this.drops.push({id:this.nextId++,kind:'item',item,x:this.p.x+10,y:this.p.y+14});}
- sell(item){const i=this.inventory.indexOf(item);if(i<0||!this.vendor||dist(this.vendor,this.p)>80)return false;this.inventory.splice(i,1);this.p.gold+=item.value;return true;}
- buy(kind){const price=20;if(!this.vendor||dist(this.vendor,this.p)>80||this.p.gold<price)return false;this.p.gold-=price;this.potions[kind]++;return true;}
+ sellValue(item){return item.unid?Math.round(item.value/2):item.value;}
+ sell(item){const i=this.inventory.indexOf(item);if(i<0||!this.vendor||dist(this.vendor,this.p)>80)return false;this.inventory.splice(i,1);this.p.gold+=this.sellValue(item);return true;}
+ sellJunk(){if(!this.vendor||dist(this.vendor,this.p)>80)return 0;const junk=this.inventory.filter(it=>it.rarity==='common');for(const it of junk)this.sell(it);return junk.length;}
+ buy(kind){const price=SUPPLIES[kind]?.price;if(!price||!this.vendor||dist(this.vendor,this.p)>80||this.p.gold<price)return false;this.p.gold-=price;this.potions[kind]=(this.potions[kind]||0)+1;return true;}
  collect(d){
   const i=this.drops.indexOf(d);if(i<0)return;
-  if(d.kind==='item'){if(this.inventory.length>=16){this.notice('Túi đầy. Mở túi (I) để vứt hoặc bán bớt.');return;}this.inventory.push(d.item);this.notice(`Nhặt được ${d.item.name} (${d.item.rarityName}).`);}
+  if(d.kind==='item'){if(this.inventory.length>=16){this.notice('Túi đầy. Mở túi (I) để vứt hoặc bán bớt.');return;}d.item.found=true;this.inventory.push(d.item);this.notice(d.item.unid?`Nhặt được món ${d.item.rarityName} chưa giám định!`:`Nhặt được ${d.item.name} (${d.item.rarityName}).`);}
   else if(d.kind==='quest'&&d.quest==='fragment'){this.fragments.push(d.theme);const n=this.fragments.length;this.float(d.x,d.y-24,`+ mảnh vé 000 (${n}/3)`,'#cfe8ff',13);
    this.notice(n===3?'Đủ ba mảnh vé 000! Cầu thang kế tiếp sẽ dẫn tới tầng của Khách Số 0.':n===1?'Mảnh vé 000 (1/3). Zin: “Cậu giữ vé của tui à? Khi nào cần, cứ gọi tui (phím Z).”':`Mảnh vé 000 (${n}/3). Zin đang đợi ở đâu đó dưới hầm.`);}
   else if(d.kind==='quest'){if(d.quest==='stamp'){this.stampFound=true;this.notice(`Có con dấu tầng ${this.depth}! Cầu thang xuống đã mở.`);}else{this.keys++;this.notice(`Nhặt được chìa khóa đồng (đang có ${this.keys}). Giữ lại để mở phòng trùm.`);}this.float(d.x,d.y-24,d.quest==='stamp'?'+ con dấu':'+ chìa khóa','#ffd36b',13);}
-  else if(d.kind==='gold'){this.p.gold+=d.amount;this.float(d.x,d.y-20,`+${d.amount} xu`,'#e7c083',11);}
-  else{this.potions[d.potion]++;this.float(d.x,d.y-20,d.potion==='bread'?'+1 bánh bao':'+1 pin AA','#a0ead4',11);}
+  else if(d.kind==='gem'){this.gems[d.gem]++;this.float(d.x,d.y-20,`+1 ${GEMS[d.gem].name}`,GEMS[d.gem].color,12);}
+  else if(d.kind==='gold'){this.p.gold+=d.amount;this.runGold+=d.amount;this.float(d.x,d.y-20,`+${d.amount} xu`,'#e7c083',11);}
+  else{this.potions[d.potion]=(this.potions[d.potion]||0)+1;this.float(d.x,d.y-20,`+1 ${SUPPLIES[d.potion].name.toLowerCase()}`,'#a0ead4',11);}
   this.drops.splice(i,1);
  }
  // ---- Combat
@@ -387,9 +396,12 @@ export class Dungeon{
   // Loot: coins often, potions sometimes, gear rarely; elites and bosses drop more and better.
   const drop=(kind,extra)=>this.drops.push({id:this.nextId++,kind,x:e.x+(this.rand()-.5)*40,y:e.y+(this.rand()-.5)*30,...extra});
   if(this.rand()<.65||e.elite||e.boss)drop('gold',{amount:Math.round((3+this.rand()*6)*this.depth*(1+d.goldPct)*(e.boss?6:e.elite?3:1))});
-  if(this.rand()<.12||e.boss)drop('potion',{potion:this.rand()<.6?'bread':'battery'});
+  if(this.rand()<.12||e.boss){const r=this.rand();drop('potion',{potion:r<.5?'bread':r<.8?'battery':r<.93?'lens':'ticket'});}
+  if(this.rand()<(e.boss?1:e.elite?.2:.04)){const kinds=Object.keys(GEMS);drop('gem',{gem:kinds[Math.floor(this.rand()*kinds.length)]});}
   const items=e.boss?3:e.elite?(this.rand()<.7?1:0)+1:this.rand()<.13?1:0;
-  for(let i=0;i<items;i++)drop('item',{item:e.boss&&i===0&&SETS[e.type]?makeSetItem(this.rand,this.depth,e.type):makeItem(this.rand,this.depth,e.boss?1.2:e.elite?.6:0)});
+  for(let i=0;i<items;i++){const item=e.boss&&i===0&&SETS[e.type]?makeSetItem(this.rand,this.depth,e.type):makeItem(this.rand,this.depth,e.boss?1.2:e.elite?.6:0);
+   // The good stuff arrives unidentified: name and affixes hidden until a Kính lúp or Mr. D looks at it.
+   if(['rare','legendary','set'].includes(item.rarity))item.unid=true;drop('item',{item});}
   // Zin's ticket: one "Vé 000" fragment per theme, rarely carried by elites and bosses.
   // Fragments belong to an act (its boss), so each act holds exactly one.
   const theme=this.floor.boss;
@@ -403,12 +415,13 @@ export class Dungeon{
   p.courage-=value;p.hurt=.25;this.float(p.x,p.y-60,`-${value}`,'#f3889c',13);
   if(p.courage<=0)this.knockout();return true;
  }
+ // Out of courage: Mr. D carries you out. Equipped gear, levels and coins you came down with are kept;
+ // bag items and coins found on this descent stay in the dungeon.
  knockout(){
-  const p=this.p,lost=Math.floor(p.gold*.1);p.gold-=lost;this.stats.knockouts++;
-  Object.assign(p,{x:this.floor.start.x,y:this.floor.start.y,path:[],target:null,pickTarget:null,courage:this.derived.maxCourage});
-  for(const c of this.companions)this.regroup(c,true);
-  for(const e of this.live()){e.aggro=false;e.state='idle';e.x=e.home.x;e.y=e.home.y;if(e.boss)e.hp=e.maxHp;}this.marks=[];this.projectiles=[];
-  this.notice(`Sợ quá! Mr. D dắt bạn về đầu tầng. Đồ vẫn còn${lost?`, rơi mất ${lost} xu`:''}.`);
+  const lostItems=this.inventory.filter(it=>it.found),lostGold=Math.min(this.p.gold,this.runGold);
+  this.inventory=this.inventory.filter(it=>!it.found);this.p.gold-=lostGold;this.runGold=0;this.stats.knockouts++;
+  this.p.courage=0;this.p.path=[];this.p.target=null;this.lost={items:lostItems.map(it=>it.unid?`??? (${it.rarityName})`:it.name),gold:lostGold};
+  this.ending='faint';this.notice('Sợ quá! Mr. D cõng bạn lên khỏi hầm.');
  }
  // ---- Simulation step
  step(dt,input={}){
@@ -547,7 +560,7 @@ export class Dungeon{
   if(item&&dist(item,p)<44)return{verb:'Nhặt',label:item.item.name};
   if(f.door&&!f.doorOpen&&dist(f.door,p)<72)return{verb:this.keys?'Mở cửa':'Khóa',label:this.keys?`Mở cửa phòng trùm (còn ${this.keys} chìa)`:'Cửa phòng trùm · cần chìa khóa đồng'};
   if(dist(f.stairs,p)<46)return{verb:this.stairsLocked?'Khóa':'Xuống',label:this.stairsLocked?(isBossFloor(this.depth)?'Cầu thang (hạ màn trùm trước)':'Cầu thang niêm phong · cần con dấu'):`Cầu thang xuống tầng ${this.depth+1}`};
-  if(dist(f.exitUp,p)<46)return{verb:'Rời hầm',label:'Thang lên · kết thúc chuyến'};
+  if(dist(f.exitUp,p)<46)return isRestStop(this.depth)?{verb:'Rời hầm',label:'Thang lên · về an toàn, giữ hết đồ'}:{verb:'Sập',label:'Thang lên bị sập · dùng Vé về'};
   if(this.vendor&&dist(this.vendor,p)<56)return{verb:'Mua bán',label:'Quầy Mr. D'};
   return null;
  }

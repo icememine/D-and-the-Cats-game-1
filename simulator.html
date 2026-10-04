@@ -8,7 +8,7 @@
 
 /* Hầm Ma: start-screen link, item cards, and the 2-column touch grid for extra skills. */
 .rooms .classic{margin-left:auto;background:none;border-color:transparent;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
-.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:10px 0}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin:10px 0}
 .item{border:1px solid var(--line);border-left:3px solid var(--rarity,var(--line));background:#0e2233;padding:8px 10px;display:flex;flex-direction:column;gap:2px;font-size:12px;color:#bcd1dc;min-width:0}
 .item b{color:var(--rarity,#e6e9e4);font-weight:600;font-size:13px}.item small{color:var(--muted);font-size:10px}.item.empty{opacity:.45;justify-content:center;text-align:center}
 .item-actions{display:flex;gap:6px;margin-top:6px}.item-actions button{flex:1;padding:4px 6px;font-size:11px}
@@ -56,7 +56,42 @@ body.dungeon{padding:0}.dungeon #game{width:100%;max-width:none;height:100dvh;bo
 .dstick{opacity:.1;transition:opacity .15s}.dstick:has(.held),.dstick:hover{opacity:.85}
 @media(max-width:520px){.dungeon #speech{left:10px;right:62px;transform:none;width:auto;max-width:none}}
 .dbtn,.dbtn:hover,.dbtn:focus{background-color:#1d150e;background-repeat:no-repeat!important;background-position:center!important;background-size:62%!important}.dbtn:hover{border-color:#ffd36b}
-</style></head><body><main id="game"><header><div class="brand">☾ <span>ÁNH TRĂNG<small>CA ĐÊM · 2001</small></span></div><div id="resources"></div><nav><button id="journal">Nhật ký <kbd>J</kbd></button><button id="pause" aria-label="Tạm dừng">Ⅱ</button></nav></header><div class="world-wrap"><canvas id="world" width="1600" height="899" aria-label="Bản đồ nhà ma có thể di chuyển. Dùng WASD hoặc phím mũi tên; E tương tác; Space dùng hành động." tabindex="0"></canvas><div class="topline"><span id="roomName">CÔNG VIÊN ÁNH TRĂNG</span><span id="mode">RPG / MÔ PHỎNG</span></div><div id="dhud" class="dhud" hidden><button id="dPause" class="dbtn dpause" aria-label="Tạm dừng"></button><div id="dStick" class="dstick"></div><button id="dUse" class="duse" hidden></button><div class="dskills"><button class="dbtn dskill" data-skill="flash" aria-label="Rọi đèn"><i></i><kbd>Space</kbd></button><button class="dbtn dskill" data-skill="candy" aria-label="Ném kẹo"><i></i><kbd>Q</kbd></button><button class="dbtn dskill" data-skill="bell" aria-label="Chuông đồng"><i></i><kbd>R</kbd><b></b></button><button class="dbtn dskill" data-skill="spotlight" aria-label="Đèn sân khấu"><i></i><kbd>F</kbd><b></b></button><button class="dbtn dskill" data-skill="dash" aria-label="Lướt"><i></i><kbd>Shift</kbd></button></div><div class="dside"><button class="dbtn dsmall" data-act="bread" aria-label="Bánh bao"><b id="dBread"></b></button><button class="dbtn dsmall" data-act="battery" aria-label="Pin AA"><b id="dBattery"></b></button><button class="dbtn dsmall" data-act="zin" aria-label="Gọi Zin"><i></i></button><button class="dbtn dsmall" data-act="tree" aria-label="Cây kỹ năng"><b id="dPoints"></b></button><button class="dbtn dsmall" data-act="bag" aria-label="Túi đồ"></button></div></div><div id="speech" aria-live="polite"></div><div id="nearby"></div><div id="loading">Đang mở cửa công viên…</div><div id="start" hidden><div class="intro"><span class="eyebrow">ĐÊM 01 · HẦM MA & CA DIỄN</span><h1>Ca đêm ở<br><em>Công viên Ánh Trăng</em></h1><p>Tự bước vào. Tự tìm đường.<br>Hoặc trở thành người đứng sau những tiếng hét.</p><div class="profile"><form id="profileForm" class="profile-form"><label for="playerName">Tên người chơi</label><div class="profile-row"><input id="playerName" name="playerName" maxlength="20" autocomplete="nickname" placeholder="Ví dụ: Bin" required><button type="submit">Vào công viên</button></div><div id="knownPlayers" class="known"></div></form><div id="profileCard" class="profile-card" hidden><span>Chào, <b id="playerLabel"></b></span><small id="saveInfo"></small><span class="profile-actions"><button id="townBtn" type="button" hidden>Quầy Mr. D</button><button id="newCharacter" type="button" hidden>Nhân vật mới</button><button id="switchPlayer" type="button">Đổi người chơi</button></span></div></div><div class="roles"><button data-role="dungeon"><small>KHÁM PHÁ · HẠ MÀN · NHẶT ĐỒ</small><strong>Vào Hầm Ma</strong><span id="dungeonSub">“Để xem có gì mà sợ.”</span></button><button data-role="employee"><small>DÀN CẢNH · HÙ DỌA · VẬN HÀNH</small><strong>Làm nhân viên</strong><span>“Tối nay, mình là người dọa.”</span></button></div><div class="rooms" role="group" aria-label="Phòng bắt đầu"><span>Phòng</span><button data-room="cemetery" class="active" aria-pressed="true">Nghĩa Địa</button><button data-room="dining" aria-pressed="false">Bàn Tiệc</button><button data-room="corridor" aria-pressed="false">Hành Lang</button><button data-role="visitor" class="classic">Tham quan cổ điển ›</button></div><p class="start-help">Kéo cần trái để đi · Nút bên phải để dùng kỹ năng<br>Chạm đồ vật để tự đi tới · Máy tính hỗ trợ WASD</p></div></div><div id="end" hidden></div></div><div class="objective"><span class="label">MỤC TIÊU</span><span id="objective">Chọn vai để bắt đầu.</span><button id="help">Cách chơi</button></div><section id="touch-controls" aria-label="Điều khiển cảm ứng">
+/* Bigger HUD buttons with their names under them; the key hint sits on the top-left edge. */
+.dbtn em{position:absolute;left:50%;top:calc(100% + 3px);transform:translateX(-50%);font:600 11px/1 system-ui;font-style:normal;color:#ffe5ad;white-space:nowrap;text-shadow:0 1px 2px #000,0 0 4px #000;pointer-events:none}
+.dbtn kbd{left:-2px;top:-6px;bottom:auto;transform:none;padding:0 3px;border-radius:4px;background:#07131dd0;font:9px monospace}
+.dskills{bottom:14px;padding:8px 14px 22px;gap:14px;border-radius:22px}
+.dskill{width:60px;height:60px}.dskill[data-skill=flash]{width:70px;height:70px}
+.dside{right:12px;bottom:14px;display:grid;grid-template-columns:auto;gap:24px 12px;justify-items:center}
+.dsmall{width:56px;height:56px}
+.dside .dbtn b{right:-6px;bottom:auto;top:-6px}
+@media(max-height:640px){.dside{grid-template-columns:auto auto}}
+@media(max-width:520px){.dskills{gap:8px;padding:6px 8px 20px;bottom:10px}.dskill{width:50px;height:50px}.dskill[data-skill=flash]{width:58px;height:58px}.dside{right:8px;bottom:118px;grid-template-columns:auto auto;gap:22px 10px}.dsmall{width:48px;height:48px}.dbtn em{font-size:10px}.duse{bottom:108px}}
+/* Gear screen: D in the middle, body slots around him. */
+.doll{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:8px 0 4px}
+.doll-col{display:flex;flex-direction:column;gap:8px;min-width:0}
+.doll-mid{text-align:center}.doll-hero{width:120px;height:auto;image-rendering:pixelated;filter:drop-shadow(0 6px 8px #0009)}
+.doll-mid .stats-line{font-size:11px;margin:4px 0 0}
+.slot{display:flex;gap:8px;align-items:center;text-align:left;padding:6px 8px;border:1px solid var(--line);border-left:3px solid var(--rarity);background:#0e2233;border-radius:6px;min-width:0}
+.slot.sel{outline:2px solid #ffd36b;background:#18324a}
+.slot img{width:32px;height:32px;image-rendering:pixelated;flex:none}
+.slot span{display:flex;flex-direction:column;min-width:0}.slot small{color:#e7c083;font-size:10px;letter-spacing:.3px}
+.slot b{color:var(--rarity);font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item-head{display:flex;gap:6px;align-items:center}.item-head img{width:24px;height:24px;image-rendering:pixelated;flex:none}.item-head b{flex:1;min-width:0}
+.body-tag{display:inline-block;padding:0 5px;border-radius:3px;background:#e7c08326;color:#e7c083;font-weight:600}
+.cmp{font-style:normal;font-size:10px;font-weight:700;color:var(--muted);white-space:nowrap}.cmp.up{color:#7ee08a}.cmp.down{color:#f3889c}
+.hidden-affix{color:#c3a7ed;font-style:italic}
+.sockets{display:flex;flex-wrap:wrap;gap:4px;align-items:center;color:#cfe8ff}.sockets img{width:16px;height:16px;image-rendering:pixelated}
+.hole{display:inline-block;width:12px;height:12px;border-radius:50%;border:1px dashed #9ab0bd}
+.supplies{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}.supply{display:flex;gap:4px;align-items:center;font-size:12px;padding:3px 8px;border:1px solid var(--line);border-radius:12px;background:#0e2233}
+.supply img,.btn-icon{width:20px;height:20px;image-rendering:pixelated;vertical-align:middle;margin-right:4px}
+.item-actions{flex-wrap:wrap}.item-actions button{display:flex;align-items:center;justify-content:center;gap:2px}
+.found{color:#f3889c!important}.hint{font-size:11px;color:var(--muted);margin:2px 0}
+.forge-msg{padding:6px 10px;border-left:3px solid #ffd36b;background:#ffd36b18;color:#ffe5ad}
+button.link{background:none;border:0;padding:0;color:#a0ead4;text-decoration:underline;font:inherit;cursor:pointer}
+.dialog-actions button small{display:block;font-size:10px;color:var(--muted)}
+@media(max-width:520px){.doll{grid-template-columns:1fr 1fr}.doll-mid{grid-column:1/-1;order:-1}.doll-hero{width:96px}}
+.where{color:var(--muted)!important}
+</style></head><body><main id="game"><header><div class="brand">☾ <span>ÁNH TRĂNG<small>CA ĐÊM · 2001</small></span></div><div id="resources"></div><nav><button id="journal">Nhật ký <kbd>J</kbd></button><button id="pause" aria-label="Tạm dừng">Ⅱ</button></nav></header><div class="world-wrap"><canvas id="world" width="1600" height="899" aria-label="Bản đồ nhà ma có thể di chuyển. Dùng WASD hoặc phím mũi tên; E tương tác; Space dùng hành động." tabindex="0"></canvas><div class="topline"><span id="roomName">CÔNG VIÊN ÁNH TRĂNG</span><span id="mode">RPG / MÔ PHỎNG</span></div><div id="dhud" class="dhud" hidden><button id="dPause" class="dbtn dpause" aria-label="Tạm dừng"></button><div id="dStick" class="dstick"></div><button id="dUse" class="duse" hidden></button><div class="dskills"><button class="dbtn dskill" data-skill="flash" aria-label="Rọi đèn"><i></i><kbd>Space</kbd><em>Rọi đèn</em></button><button class="dbtn dskill" data-skill="candy" aria-label="Ném kẹo"><i></i><kbd>Q</kbd><em>Ném kẹo</em></button><button class="dbtn dskill" data-skill="bell" aria-label="Chuông đồng"><i></i><kbd>R</kbd><b></b><em>Chuông</em></button><button class="dbtn dskill" data-skill="spotlight" aria-label="Đèn sân khấu"><i></i><kbd>F</kbd><b></b><em>Sân khấu</em></button><button class="dbtn dskill" data-skill="dash" aria-label="Lướt"><i></i><kbd>Shift</kbd><em>Lướt</em></button></div><div class="dside"><button class="dbtn dsmall" data-act="bread" aria-label="Bánh bao"><b id="dBread"></b><kbd>1</kbd><em>Bánh bao</em></button><button class="dbtn dsmall" data-act="battery" aria-label="Pin AA"><b id="dBattery"></b><kbd>2</kbd><em>Pin AA</em></button><button class="dbtn dsmall" data-act="ticket" aria-label="Vé về"><b id="dTicket"></b><kbd>3</kbd><em>Vé về</em></button><button class="dbtn dsmall" data-act="zin" aria-label="Gọi Zin"><i></i><kbd>Z</kbd><em>Gọi Zin</em></button><button class="dbtn dsmall" data-act="tree" aria-label="Kỹ năng"><b id="dPoints"></b><kbd>K</kbd><em>Kỹ năng</em></button><button class="dbtn dsmall" data-act="bag" aria-label="Đồ nghề"><kbd>I</kbd><em>Đồ nghề</em></button></div></div><div id="speech" aria-live="polite"></div><div id="nearby"></div><div id="loading">Đang mở cửa công viên…</div><div id="start" hidden><div class="intro"><span class="eyebrow">ĐÊM 01 · HẦM MA & CA DIỄN</span><h1>Ca đêm ở<br><em>Công viên Ánh Trăng</em></h1><p>Tự bước vào. Tự tìm đường.<br>Hoặc trở thành người đứng sau những tiếng hét.</p><div class="profile"><form id="profileForm" class="profile-form"><label for="playerName">Tên người chơi</label><div class="profile-row"><input id="playerName" name="playerName" maxlength="20" autocomplete="nickname" placeholder="Ví dụ: Bin" required><button type="submit">Vào công viên</button></div><div id="knownPlayers" class="known"></div></form><div id="profileCard" class="profile-card" hidden><span>Chào, <b id="playerLabel"></b></span><small id="saveInfo"></small><span class="profile-actions"><button id="townBtn" type="button" hidden>Quầy Mr. D</button><button id="newCharacter" type="button" hidden>Nhân vật mới</button><button id="switchPlayer" type="button">Đổi người chơi</button></span></div></div><div class="roles"><button data-role="dungeon"><small>KHÁM PHÁ · HẠ MÀN · NHẶT ĐỒ</small><strong>Vào Hầm Ma</strong><span id="dungeonSub">“Để xem có gì mà sợ.”</span></button><button data-role="employee"><small>DÀN CẢNH · HÙ DỌA · VẬN HÀNH</small><strong>Làm nhân viên</strong><span>“Tối nay, mình là người dọa.”</span></button></div><div class="rooms" role="group" aria-label="Phòng bắt đầu"><span>Phòng</span><button data-room="cemetery" class="active" aria-pressed="true">Nghĩa Địa</button><button data-room="dining" aria-pressed="false">Bàn Tiệc</button><button data-room="corridor" aria-pressed="false">Hành Lang</button><button data-role="visitor" class="classic">Tham quan cổ điển ›</button></div><p class="start-help">Kéo cần trái để đi · Nút bên phải để dùng kỹ năng<br>Chạm đồ vật để tự đi tới · Máy tính hỗ trợ WASD</p></div></div><div id="end" hidden></div></div><div class="objective"><span class="label">MỤC TIÊU</span><span id="objective">Chọn vai để bắt đầu.</span><button id="help">Cách chơi</button></div><section id="touch-controls" aria-label="Điều khiển cảm ứng">
  <div class="joystick-area"><div id="joystick" role="group" aria-label="Cần điều khiển di chuyển"><span class="joystick-arrows">✦</span><div id="stick"></div></div><span class="touch-caption">DI CHUYỂN</span></div>
  <div class="touch-middle"><button id="touchRun" aria-label="Giữ để chạy">»<small>Giữ chạy</small></button><button id="touchPlace" hidden>＋<small>Đặt loa</small></button><button id="touchUlt" hidden>✺<small id="touchUltLabel">Sân khấu</small></button><button id="touchBread" hidden>◒<small id="touchBreadLabel">Bánh</small></button><button id="touchBattery" hidden>▮<small id="touchBatteryLabel">Pin</small></button><button id="touchZin" hidden>✧<small id="touchZinLabel">Zin</small></button></div>
  <div class="touch-actions"><button id="touchSecondary" class="round small-round"><span>◌</span><small id="touchSecondaryLabel">Nấp</small></button><button id="touchPrimary" class="round main-round"><span id="touchPrimaryIcon">☀</span><small id="touchPrimaryLabel">Đèn pin</small></button><button id="touchInteract" class="round use-round"><span>✋</span><small id="touchInteractLabel">Sử dụng</small></button></div>
@@ -542,7 +577,7 @@ class Simulation{
 
 return{W,H,EVIDENCE,FOUND,distance,passable,visible,findPath,Simulation};})();
 // ---- art.mjs
-const {paintLongNeck,paintRoom,paintZombie,paintSheetGhost,paintSkeleton,paintLanternGhost,paintMrD,paintDungeonFloor,paintCat,paintIcon,ICON_NAMES}=(()=>{
+const {paintLongNeck,paintRoom,paintZombie,paintSheetGhost,paintSkeleton,paintLanternGhost,paintMrD,paintDungeonFloor,paintCat,GEAR_TINT,paintHero,paintIcon,paintGem,ICON_NAMES}=(()=>{
 // Procedural pixel art for rooms without hand-made assets yet (placeholder until art production).
 // Everything is painted once into offscreen canvases from the same room data the simulation
 // collides against, so what you see always matches where you can walk.
@@ -897,11 +932,11 @@ const CAT={
  bo:{base:'#f2eee6',shade:'#d8d2c6',stripe:null,belly:'#ffffff',patches:[['#e8873a',[[5,3,6,6],[16,17,6,5],[21,20,4,4]]],['#2b2626',[[16,3,7,5],[7,19,5,5],[23,23,3,3]]]]},
  na:{base:'#8d8270',shade:'#6d6354',stripe:'#4a4237',belly:'#c9bfae'},
 };
-function paintCat(kind){
- const c=CAT[kind];return sprite(28,31,r=>{
+function paintCat(kind,frame=0){
+ const c=CAT[kind],k=frame?(frame-1)%4:-1,liftA=k===0?2:0,liftB=k===2?2:0;return sprite(28,31,r=>{
   r(22,16,4,3,c.shade);r(24,13,3,4,c.shade);r(21,19,3,8,c.base);
   r(6,15,16,13,c.base);r(9,18,10,9,c.belly);r(19,16,3,11,c.shade);
-  r(8,27,5,3,c.belly);r(15,27,5,3,c.belly);
+  r(8,27,5,3-liftA,c.belly);r(15,27,5,3-liftB,c.belly);r(4,27,4,3-liftB,c.base);r(19,27,4,3-liftA,c.shade);
   r(4,4,20,12,c.base);r(5,3,18,2,c.base);r(4,0,4,5,c.base);r(20,0,4,5,c.base);r(5,1,2,3,'#f3a3b5');r(21,1,2,3,'#f3a3b5');r(21,4,3,11,c.shade);
   if(c.stripe){r(10,4,2,3,c.stripe);r(13,4,2,4,c.stripe);r(16,4,2,3,c.stripe);r(6,17,3,2,c.stripe);r(19,19,3,2,c.stripe);r(6,22,3,2,c.stripe);r(23,13,2,2,c.stripe);}
   for(const [col,boxes] of c.patches||[])for(const b of boxes)r(...b,col);
@@ -910,6 +945,51 @@ function paintCat(kind){
   r(2,10,3,1,'#f2eee6');r(23,10,3,1,'#f2eee6');
   if(kind==='bo'){r(4,0,20,3,'#2e5fa8');r(3,3,22,2,'#2e5fa8');r(22,4,4,1,'#2e5fa8');r(7,7,5,5,'#1a1418');r(16,7,5,5,'#1a1418');r(8,8,3,3,'#cfe3ff');r(17,8,3,3,'#cfe3ff');r(12,9,4,1,'#1a1418');r(9,9,1,1,'#1a1418');r(18,9,1,1,'#1a1418');}
   if(kind==='na'){r(19,1,3,3,'#f07aa0');r(23,1,3,3,'#f07aa0');r(22,2,1,1,'#c94a76');}
+ });
+}
+
+// ---- D, the hero of Hầm Ma, built from layers so worn gear shows on him.
+// look: {hat,coat,torch,bag:{style,tint:[main,shade]}, shoes,charm,badge:colour, cape:bool}; any part may be missing.
+// frame 0 is standing; 1-4 are the walk cycle (legs step, arms swing, body bobs).
+const GEAR_TINT={common:['#9a9488','#77716a'],magic:['#4a86d8','#2f62a8'],rare:['#efc23a','#c39a22'],legendary:['#f0843a','#c2601f'],set:['#56b866','#3a8a48']};
+const HERO={skin:'#f2c9a0',skinShade:'#d9a77c',hair:'#1c1a2e',hairHi:'#3d3868',streak:'#d9862e',eye:'#2a1a14',tee:'#2a2c55',teeShade:'#1d1e3d',pants:'#25253d',pantsShade:'#1a1a2c',sole:'#f4f1e6'};
+function paintHero(look={},frame=0){
+ const k=frame?(frame-1)%4:-1,liftL=k===0?3:k===1||k===3?1:0,liftR=k===2?3:k===1||k===3?1:0,bob=k===0||k===2?-1:0,swing=k===0?1:k===2?-1:0,H=HERO;
+ return sprite(32,58,r=>{
+  const R=(x,y,w,h,c)=>r(x,y+bob+1,w,h,c);
+  const {hat,coat,torch,bag,cape}=look,cm=coat?.tint[0],cs=coat?.tint[1];
+  if(cape){R(7,20,18,25,'#a8323e');R(7,43,18,2,'#7a2430');}
+  if(bag&&bag.style===0){R(5,21,22,14,bag.tint[1]);R(5,21,22,2,bag.tint[0]);}
+  if(coat&&coat.style===1)R(8,9,16,11,cs);
+  if(coat&&coat.style===2)R(9,14,14,6,cs);
+  // Legs and shoes: the lifted leg is shorter, so the feet step.
+  const shoe=look.shoes||'#c23b3b';
+  for(const [x0,lift] of [[10,liftL],[17,liftR]]){const x=x0+(lift===3?(x0<16?-1:1):0);r(x,36,6,15-lift,H.pants);r(x+4,36,2,15-lift,H.pantsShade);r(x-1,51-lift,7,3,shoe);r(x-1,54-lift,7,1,H.sole);r(x,51-lift,2,1,H.sole);}
+  R(9,20,14,15,H.tee);R(19,20,4,15,H.teeShade);
+  if(coat){const long=coat.style===1;R(8,20,16,long?19:16,cm);R(20,20,4,long?19:16,cs);
+   if(coat.style===0){R(14,21,4,14,H.tee);R(10,19,12,2,cs);R(8,34,16,2,cs);}
+   else if(coat.style===1){R(15,21,1,17,cs);R(8,37,16,2,cs);}
+   else{R(11,29,10,4,cs);R(13,21,1,4,H.sole);R(18,21,1,4,H.sole);R(8,34,16,2,cs);}}
+  // Arms swing opposite to each other.
+  for(const [x,dy,shade] of [[5,swing,false],[24,-swing,true]]){
+   if(coat){R(x,20+dy,3,12,shade?cs:cm);}else{R(x,20+dy,3,5,shade?H.teeShade:H.tee);R(x,25+dy,3,7,shade?H.skinShade:H.skin);}
+   R(x,32+dy,3,3,shade?H.skinShade:H.skin);}
+  if(torch&&torch.style===0){R(26,31-swing,5,3,torch.tint[1]);R(26,31-swing,5,1,torch.tint[0]);R(30,30-swing,2,5,'#fff3c4');}
+  if(torch&&torch.style===2){R(26,35-swing,1,2,'#b08a4a');R(24,37-swing,5,6,torch.tint[0]);R(25,38-swing,3,4,'#fff3c4');}
+  if(bag&&bag.style===0){R(10,20,2,13,bag.tint[1]);R(20,20,2,13,bag.tint[1]);}
+  if(bag&&bag.style===1){for(let i=0;i<12;i++)R(9+i,20+i,2,1,bag.tint[1]);R(19,30,6,5,bag.tint[0]);R(19,30,6,1,bag.tint[1]);}
+  if(bag&&bag.style===2){R(23,21,1,9,bag.tint[1]);R(22,29,6,7,bag.tint[0]);R(22,29,6,1,bag.tint[1]);}
+  R(14,18,4,2,H.skinShade);
+  if(look.charm){R(12,20,8,1,'#b08a4a');R(15,21,2,2,look.charm);}
+  if(look.badge){R(18,24,3,3,look.badge);R(19,25,1,1,'#fff');}
+  R(9,5,14,13,H.skin);R(20,6,3,11,H.skinShade);R(8,10,1,3,H.skin);R(23,10,1,3,H.skinShade);
+  R(12,11,2,3,H.eye);R(18,11,2,3,H.eye);R(12,11,1,1,'#fff');R(18,11,1,1,'#fff');R(15,15,2,1,'#b5655a');R(10,14,2,1,'#f3a3a0');R(20,14,2,1,'#f3a3a0');
+  R(8,2,16,6,H.hair);R(7,4,2,8,H.hair);R(23,4,2,8,H.hair);R(10,0,3,3,H.hair);R(15,0,3,2,H.hair);R(20,1,3,3,H.hair);R(11,7,3,2,H.hair);R(17,7,4,2,H.hair);R(12,2,4,1,H.hairHi);R(19,2,3,1,H.streak);
+  if(torch&&torch.style===1){R(8,8,16,1,'#3a4a5a');R(14,6,4,3,torch.tint[0]);R(15,7,2,1,'#fff3c4');}
+  if(hat){const [m,sd]=hat.tint;
+   if(hat.style===0){R(8,1,16,6,m);R(8,6,16,1,sd);R(21,6,7,2,sd);R(15,0,2,1,sd);}
+   else if(hat.style===1){R(8,0,16,7,m);R(8,6,16,2,sd);for(let x=9;x<23;x+=3)R(x,1,1,5,sd);R(14,-1,4,2,H.sole);}
+   else{for(let i=0;i<7;i++)R(14-i*2,-1+i,4+i*4,1,i%2?sd:m);R(2,6,28,1,sd);}}
  });
 }
 
@@ -936,14 +1016,20 @@ const ICONS={
  charm:r=>{r(7,1,2,3,'#b08a4a');r(4,4,8,8,'#a0ead4');r(5,5,3,3,'#e9fff6');r(6,12,4,2,'#5fb39f');},
  shoes:r=>{r(1,8,7,5,'#c23b3b');r(1,12,8,2,'#f4f1e6');r(8,7,7,6,'#c23b3b');r(8,12,8,2,'#f4f1e6');r(3,9,2,1,'#f4f1e6');r(10,8,2,1,'#f4f1e6');},
  hat:r=>{r(3,4,10,6,'#2e5fa8');r(2,9,13,2,'#2e5fa8');r(12,10,4,2,'#244c88');r(6,5,3,2,'#5e95e8');},
+ home:r=>{r(1,4,14,8,'#a0ead4');r(1,4,14,1,'#e9fff6');r(11,4,1,8,'#5fb39f');r(4,6,1,4,'#1d4a3e');r(3,7,3,1,'#1d4a3e');r(4,6,4,1,'#1d4a3e');r(7,6,1,3,'#1d4a3e');},
+ lens:r=>{r(3,2,7,7,'#cfe8ff');r(4,3,5,5,'#e9f6ff');r(2,3,1,5,'#9fb3c2');r(10,3,1,5,'#9fb3c2');r(3,1,7,1,'#9fb3c2');r(3,9,7,1,'#9fb3c2');r(9,9,2,2,'#8a5a32');r(11,11,2,2,'#8a5a32');r(12,12,3,3,'#6a4022');r(5,4,2,1,'#ffffff');},
+ hammer:r=>{r(2,2,9,5,'#9fb3c2');r(2,2,9,1,'#e6e9e4');r(10,3,3,3,'#6d8295');r(5,7,3,8,'#8a5a32');r(5,7,1,8,'#a8743e');},
+ gem:r=>{r(5,2,6,2,'#ffffff');r(3,4,10,3,'#e6e9e4');r(4,7,8,3,'#c4ccd4');r(6,10,4,3,'#9aa6b0');r(7,13,2,1,'#9aa6b0');r(5,4,2,2,'#ffffff');},
  badge:r=>{r(4,2,8,8,'#e7c083');r(3,4,10,4,'#e7c083');r(6,4,4,4,'#c23b3b');r(5,10,2,5,'#2e5fa8');r(9,10,2,5,'#2e5fa8');},
 };
 function paintIcon(name){return sprite(16,16,r=>ICONS[name](r));}
+// A gem icon in a given colour: the white gem tinted by multiply.
+function paintGem(color){const c=paintIcon('gem'),g=c.getContext('2d');g.globalCompositeOperation='multiply';g.fillStyle=color;g.fillRect(0,0,c.width,c.height);g.globalCompositeOperation='destination-in';g.drawImage(paintIcon('gem'),0,0);return c;}
 const ICON_NAMES=Object.keys(ICONS);
 
-return{paintLongNeck,paintRoom,paintZombie,paintSheetGhost,paintSkeleton,paintLanternGhost,paintMrD,paintDungeonFloor,paintCat,paintIcon,ICON_NAMES};})();
+return{paintLongNeck,paintRoom,paintZombie,paintSheetGhost,paintSkeleton,paintLanternGhost,paintMrD,paintDungeonFloor,paintCat,GEAR_TINT,paintHero,paintIcon,paintGem,ICON_NAMES};})();
 // ---- progression.mjs
-const {SKILL_TREE,BRANCHES,RESPEC_COST,rank,spentPoints,skillPoints,canLearn,learn,SETS,setBonuses,TOWN,emptyTown,townPrice,buyTown,costumeStat,hasGadget,FRAGMENT_CHANCE,ZIN_DURATION}=(()=>{
+const {SKILL_TREE,BRANCHES,RESPEC_COST,rank,spentPoints,skillPoints,canLearn,learn,SETS,setBonuses,TOWN,emptyTown,townPrice,buyTown,costumeStat,hasGadget,FRAGMENT_CHANCE,ZIN_DURATION,MAX_PLUS,upgradeChance,upgradeCost,plusBase,upgradeItem,GEMS,emptyGems,socketsFor,socketGem,identifyCost,identifyItem,SUPPLIES,isRestStop}=(()=>{
 // Long-term progression for Hầm Ma: the skill tree, boss gear sets, Mr. D's town hub and Zin's
 // ticket fragments. Pure data and functions; no browser code.
 
@@ -1028,13 +1114,63 @@ const hasGadget=(town,id)=>!!town?.gadgets?.includes(id);
 const FRAGMENT_CHANCE={boss:.5,elite:.1};
 const ZIN_DURATION=12;
 
-return{SKILL_TREE,BRANCHES,RESPEC_COST,rank,spentPoints,skillPoints,canLearn,learn,SETS,setBonuses,TOWN,emptyTown,townPrice,buyTown,costumeStat,hasGadget,FRAGMENT_CHANCE,ZIN_DURATION};})();
+// ---- Mr. D's forge: +1 … +10 upgrades. Each + raises the item's base stat by 12%.
+// +1 to +3 always work; after that the odds fall, and a failure from +5 up drops a level.
+const MAX_PLUS=10;
+const upgradeChance=plus=>plus<3?1:[.9,.8,.7,.6,.5,.4,.3][plus-3]??0;
+const upgradeCost=item=>Math.round((15+item.ilvl*6)*(1+(item.plus||0)*.6));
+const plusBase=item=>Object.fromEntries(Object.entries(item.base).map(([k,v])=>[k,Math.round(v*(1+.12*(item.plus||0)))]));
+function rebase(item,before){const after=plusBase(item);for(const k of Object.keys(after))item.stats[k]=(item.stats[k]||0)-before[k]+after[k];}
+// `purse` holds the coins ({gold}); `roll` is a number in [0,1). Returns 'up', 'fail', 'down' or a reason.
+function upgradeItem(purse,item,roll){
+ const plus=item.plus||0;if(plus>=MAX_PLUS)return'max';if(item.unid)return'unid';
+ const cost=upgradeCost(item);if((purse.gold||0)<cost)return'gold';purse.gold-=cost;
+ const before=plusBase(item);
+ if(roll<upgradeChance(plus)){item.plus=plus+1;rebase(item,before);return'up';}
+ if(plus>=5){item.plus=plus-1;rebase(item,before);return'down';}
+ return'fail';
+}
+
+// ---- Gems: dropped by performers, set into Hiếm (1 socket), Huyền thoại and Bộ items (2). Permanent.
+const GEMS={
+ ruby:{name:'Hồng ngọc',stat:'dmgPct',value:6,text:'+6% sát thương',color:'#e0445a'},
+ sapphire:{name:'Lam ngọc',stat:'battery',value:15,text:'+15 pin tối đa',color:'#4a86e8'},
+ emerald:{name:'Lục bảo',stat:'armor',value:8,text:'+8 giáp',color:'#3fbf6a'},
+ topaz:{name:'Hoàng ngọc',stat:'crit',value:3,text:'+3% chí mạng',color:'#f2c230'},
+};
+const emptyGems=()=>Object.fromEntries(Object.keys(GEMS).map(k=>[k,0]));
+const socketsFor=item=>({rare:1,legendary:2,set:2}[item.rarity]||0);
+// `pouch` holds the gems ({gems:{ruby:n,…}}). Returns null or a reason.
+function socketGem(pouch,item,gem){
+ if(!GEMS[gem])return'unknown';if(item.unid)return'unid';
+ item.gems=item.gems||[];if(item.gems.length>=socketsFor(item))return'full';
+ if(!pouch.gems?.[gem])return'none';pouch.gems[gem]--;item.gems.push(gem);
+ const g=GEMS[gem];item.stats[g.stat]=(item.stats[g.stat]||0)+g.value;return null;
+}
+
+// ---- Unidentified items: Hiếm, Huyền thoại and Bộ drops hide their name and affixes until
+// identified, by Mr. D (coins) or with a Kính lúp. They can't be worn before that.
+const identifyCost=item=>10+item.ilvl*4;
+function identifyItem(purse,item,{free=false}={}){
+ if(!item.unid)return'known';
+ if(!free){const cost=identifyCost(item);if((purse.gold||0)<cost)return'gold';purse.gold-=cost;}
+ item.unid=false;return null;
+}
+
+// ---- Consumables Mr. D sells, in the dungeon and in town.
+const SUPPLIES={bread:{name:'Bánh bao',price:20,text:'+45% can đảm'},battery:{name:'Pin AA',price:20,text:'+60 pin'},ticket:{name:'Vé về',price:60,text:'Về quầy Mr. D an toàn, giữ hết đồ'},lens:{name:'Kính lúp',price:25,text:'Giám định một món đồ'}};
+// Rest stops: Mr. D's floors (1, 4, 7, …). The ladder up only works there, and a new descent can start
+// from the deepest one reached.
+const isRestStop=depth=>depth%3===1;
+
+return{SKILL_TREE,BRANCHES,RESPEC_COST,rank,spentPoints,skillPoints,canLearn,learn,SETS,setBonuses,TOWN,emptyTown,townPrice,buyTown,costumeStat,hasGadget,FRAGMENT_CHANCE,ZIN_DURATION,MAX_PLUS,upgradeChance,upgradeCost,plusBase,upgradeItem,GEMS,emptyGems,socketsFor,socketGem,identifyCost,identifyItem,SUPPLIES,isRestStop};})();
 // ---- dungeon.mjs
 const {TILE,MAP_W,MAP_H,rng,THEMES,HELL,ACT_BOSSES,bossFor,themeFor,isBossFloor,DOOR,generateFloor,isFloor,floorPassable,lineOfSight,flowField,ENEMIES,RARITY,SLOTS,makeItem,makeSetItem,describeBase,SKILLS,xpForLevel,Dungeon}=(()=>{
 // Hầm Ma: the action-RPG visitor mode. Procedural floors, packs of ghost performers, loot, levels.
 // "Fighting" means breaking a performer's act: knock their Composure to 0 and they crack up laughing,
-// drop what they carry and leave. Running out of Courage never kills you: Mr. D walks you back to the
-// start of the floor. No browser dependencies, so the rules can be tested headless.
+// drop what they carry and leave. Running out of Courage never kills you, but Mr. D carries you out and
+// everything you found on this descent and didn't put on stays behind: go deeper, or go home with a
+// Vé về. No browser dependencies, so the rules can be tested headless.
 
 
 const TILE=32;
@@ -1153,13 +1289,14 @@ const RARITY=[
  {id:'legendary',name:'Huyền thoại',affixes:4,weight:2},
 ];
 const SLOTS={
- torch:{label:'Đèn',bases:['Đèn pin','Đèn đội đầu','Đèn bão']},
- coat:{label:'Áo',bases:['Áo khoác','Áo mưa','Áo hoodie']},
- charm:{label:'Bùa',bases:['Bùa hộ mệnh','Móc khóa','Vòng tay']},
- shoes:{label:'Giày',bases:['Giày bata','Dép tổ ong','Giày thể thao']},
- hat:{label:'Mũ',bases:['Mũ lưỡi trai','Mũ len','Nón lá']},
- bag:{label:'Túi',bases:['Ba lô','Túi đeo chéo','Túi vải']},
- badge:{label:'Huy hiệu',bases:['Huy hiệu','Ghim cài','Thẻ nhân viên']},
+ // `body` is where it is worn, shown on the gear screen so players know what goes where.
+ hat:{label:'Mũ',body:'Đầu',bases:['Mũ lưỡi trai','Mũ len','Nón lá']},
+ charm:{label:'Dây chuyền',body:'Cổ',bases:['Bùa hộ mệnh','Dây chuyền','Mặt dây ngọc']},
+ badge:{label:'Huy hiệu',body:'Ngực',bases:['Huy hiệu','Ghim cài','Thẻ nhân viên']},
+ torch:{label:'Đèn',body:'Tay',bases:['Đèn pin','Đèn đội đầu','Đèn bão']},
+ coat:{label:'Áo',body:'Thân',bases:['Áo khoác','Áo mưa','Áo hoodie']},
+ bag:{label:'Túi',body:'Lưng',bases:['Ba lô','Túi đeo chéo','Túi vải']},
+ shoes:{label:'Giày',body:'Chân',bases:['Giày bata','Dép tổ ong','Giày thể thao']},
 };
 const AFFIXES={
  dmgPct:{label:v=>`+${v}% sát thương`,roll:(r,l)=>Math.round(5+r()*8+l),word:'Chói Lóa'},
@@ -1188,10 +1325,10 @@ function makeItem(rand,ilvl,bias=0,slot=null){
  const base=BASE_STAT[slot](ilvl),stats={...base},pool=Object.keys(AFFIXES).filter(k=>!AFFIXES[k].cond),affixes=[];
  const conds=Object.keys(AFFIXES).filter(k=>AFFIXES[k].cond&&(!AFFIXES[k].legendary||rarity.id==='legendary'));
  for(let i=0;i<rarity.affixes;i++){const cond=i===rarity.affixes-1&&(rarity.id==='legendary'||rarity.id==='rare'&&rand()<.5);const from=cond?conds:pool;const k=from.splice(Math.floor(rand()*from.length),1)[0];const v=AFFIXES[k].roll(rand,ilvl);stats[k]=(stats[k]||0)+v;affixes.push([k,v]);}
- const baseName=SLOTS[slot].bases[Math.floor(rand()*SLOTS[slot].bases.length)];
+ const style=Math.floor(rand()*SLOTS[slot].bases.length),baseName=SLOTS[slot].bases[style];
  const name=rarity.id==='legendary'?LEGENDARY_NAMES[slot]:affixes.length?`${baseName} ${AFFIXES[affixes[0][0]].word}`:baseName;
  const value=Math.round((6+ilvl*3)*(1+RARITY.indexOf(rarity)*1.5));
- return{slot,rarity:rarity.id,rarityName:rarity.name,name,ilvl,stats,base,affixes:affixes.map(([k,v])=>AFFIXES[k].label(v)),value};
+ return{slot,style,rarity:rarity.id,rarityName:rarity.name,name,ilvl,stats,base,affixes:affixes.map(([k,v])=>AFFIXES[k].label(v)),value};
 }
 // A boss set piece: its theme's named item for a slot, with two affixes.
 function makeSetItem(rand,ilvl,setId,slot=null){
@@ -1219,7 +1356,7 @@ class Dungeon{
  constructor(seed=Date.now()%100000){
   this.seed=seed;this.rand=rng(seed*7+3);this.time=0;this.ending=null;this.bubble=null;this.floaters=[];this.effects=[];
   this.p={x:0,y:0,r:11,face:0,moving:false,level:1,xp:0,gold:0,courage:100,battery:100,dash:0,dashDir:0,hurt:0,path:[],target:null,pickTarget:null};
-  this.potions={bread:2,battery:1};this.keys=0;
+  this.potions={bread:2,battery:1,ticket:1,lens:0};this.keys=0;this.gems=emptyGems();this.runGold=0;this.lost=null;this.checkpoint=1;
   this.companions=[makeCompanion('na'),makeCompanion('bo')];this.inventory=[];this.equipped={torch:null,coat:null,charm:null,shoes:null,hat:null,bag:null,badge:null};
   this.tree={};this.town=emptyTown();this.fragments=[];this.zinState=null;this.zinFloorDone=false;this.zin=null;this.zinUsed=false;this.autoAttack=false;
   this.cooldowns={flash:0,candy:0,bell:0,spotlight:0,dash:0,potion:0};
@@ -1259,7 +1396,7 @@ class Dungeon{
   for(const c of this.companions)this.regroup(c,true);
   this.enemies=[];this.projectiles=[];this.drops=[];this.marks=[];this.effects=[];this.floaters=[];this.field=null;this.fieldAt=-1;this.nextId=1;
   this.stampFound=false;this.bossBroken=false;this.zin=null;this.zinUsed=false;
-  this.vendor=depth%3===1?{x:st.x+70,y:st.y-30}:null;
+  this.vendor=isRestStop(depth)?{x:st.x+70,y:st.y-30}:null;if(isRestStop(depth))this.checkpoint=Math.max(this.checkpoint,depth);
   const scale=scaleFor(depth),theme=f.theme,boss=isBossFloor(depth);
   // The key only appears on a boss floor if you arrive without one, so you can never be stuck.
   const keyHere=!boss||this.keys===0;
@@ -1317,7 +1454,9 @@ class Dungeon{
  }
  usePotion(kind){
   if(this.ending||this.cooldowns.potion>0)return false;
-  if(!this.potions[kind]){this.notice(kind==='bread'?'Hết bánh bao. Mua thêm ở quầy Mr. D.':'Hết pin AA.');return false;}
+  if(!this.potions[kind]){this.notice({bread:'Hết bánh bao. Mua thêm ở quầy Mr. D.',battery:'Hết pin AA.',ticket:'Hết Vé về. Mr. D bán ở trạm nghỉ (60 xu).',lens:'Hết Kính lúp.'}[kind]);return false;}
+  if(kind==='lens'){const it=this.inventory.find(i=>i.unid);if(!it){this.notice('Không có món nào cần giám định.');return false;}this.potions.lens--;identifyItem(null,it,{free:true});this.notice(`Kính lúp: đó là ${it.name} (${it.rarityName})!`);return true;}
+  if(kind==='ticket'){this.potions.ticket--;this.finish('Vé về: Mr. D kéo bạn lên an toàn. Mọi thứ nhặt được đều giữ lại.');return true;}
   const d=this.derived;this.potions[kind]--;this.cooldowns.potion=1;
   if(kind==='bread'){this.p.courage=Math.min(d.maxCourage,this.p.courage+d.maxCourage*.45);this.float(this.p.x,this.p.y-70,'+can đảm','#f3889c');}
   else{this.p.battery=Math.min(d.maxBattery,this.p.battery+60);this.float(this.p.x,this.p.y-70,'+pin','#e7c083');}
@@ -1341,11 +1480,13 @@ class Dungeon{
    if(this.stairsLocked){this.notice(isBossFloor(this.depth)?`Cầu thang khóa. Hạ màn ${ENEMIES[f.boss].name} trước.`:`Cầu thang bị niêm phong. Tìm con dấu tầng ${this.depth}.`);return true;}
    if(this.fragments.length>=3&&!this.zinFloorDone&&!this.zinState)this.enterZinFloor();else this.enterFloor(this.depth+1);return true;
   }
-  if(dist(f.exitUp,p)<46){this.finish();return true;}
+  if(dist(f.exitUp,p)<46){if(isRestStop(this.depth)){this.finish();return true;}this.notice('Thang lên bị sập ở tầng này. Dùng Vé về, hoặc tới trạm nghỉ của Mr. D (tầng 4, 7, 10…).');return true;}
   if(this.vendor&&dist(this.vendor,p)<56)return'shop';
   this.notice('Không có gì để dùng ở đây.');return false;
  }
- finish(){this.ending='dungeon';this.notice('Bạn leo lên khỏi hầm.');}
+ // Leaving safely banks everything found on this descent.
+ bank(){for(const it of [...this.inventory,...Object.values(this.equipped)])if(it)delete it.found;this.runGold=0;}
+ finish(text='Bạn leo lên khỏi hầm.'){this.bank();this.ending='dungeon';this.notice(text);}
  // ---- Zin (Khách Số 0)
  get canCallZin(){return this.fragments.length>0&&this.zinState!=='gone'&&!this.zinUsed&&!this.zin&&!this.ending&&this.floor.special!=='zin';}
  // Once per floor Zin steps in: full courage, a stun wave, then 12 s of help as strong as you, Na and Bơ together.
@@ -1375,22 +1516,25 @@ class Dungeon{
   this.float(f.start.x,f.start.y-60,'TẦNG 000','#cfe8ff',16);this.notice('Zin: “Còn một phòng nữa mà…” Vé 000 thiếu một dấu mộc cuối cùng.');
  }
  finishZin(choice){
-  this.zinFloorDone=true;this.zinState=choice==='ticket'?'gone':'staff';this.ending=choice;
+  this.zinFloorDone=true;this.zinState=choice==='ticket'?'gone':'staff';this.bank();this.ending=choice;
   this.notice(choice==='ticket'?'Zin: “Lâu quá…” Dấu mộc cuối cùng. Zin mỉm cười rồi tan đi.':'Mr. D ghi vào bảng phân ca: “Đứa này khỏi cần phát đồng phục.”');
  }
  // ---- Inventory
- equip(item,silent=false){const old=this.equipped[item.slot];this.equipped[item.slot]=item;const i=this.inventory.indexOf(item);if(i>=0)this.inventory.splice(i,1);if(old)this.inventory.push(old);const d=this.derived;this.p.courage=Math.min(this.p.courage,d.maxCourage);this.p.battery=Math.min(this.p.battery,d.maxBattery);if(!silent)this.notice(`Đã trang bị ${item.name}.`);}
+ equip(item,silent=false){if(item.unid){if(!silent)this.notice('Món này chưa giám định. Dùng Kính lúp hoặc nhờ Mr. D.');return'unid';}delete item.found;const old=this.equipped[item.slot];this.equipped[item.slot]=item;const i=this.inventory.indexOf(item);if(i>=0)this.inventory.splice(i,1);if(old)this.inventory.push(old);const d=this.derived;this.p.courage=Math.min(this.p.courage,d.maxCourage);this.p.battery=Math.min(this.p.battery,d.maxBattery);if(!silent)this.notice(`Đã trang bị ${item.name}.`);}
  dropItem(item){const i=this.inventory.indexOf(item);if(i<0)return;this.inventory.splice(i,1);this.drops.push({id:this.nextId++,kind:'item',item,x:this.p.x+10,y:this.p.y+14});}
- sell(item){const i=this.inventory.indexOf(item);if(i<0||!this.vendor||dist(this.vendor,this.p)>80)return false;this.inventory.splice(i,1);this.p.gold+=item.value;return true;}
- buy(kind){const price=20;if(!this.vendor||dist(this.vendor,this.p)>80||this.p.gold<price)return false;this.p.gold-=price;this.potions[kind]++;return true;}
+ sellValue(item){return item.unid?Math.round(item.value/2):item.value;}
+ sell(item){const i=this.inventory.indexOf(item);if(i<0||!this.vendor||dist(this.vendor,this.p)>80)return false;this.inventory.splice(i,1);this.p.gold+=this.sellValue(item);return true;}
+ sellJunk(){if(!this.vendor||dist(this.vendor,this.p)>80)return 0;const junk=this.inventory.filter(it=>it.rarity==='common');for(const it of junk)this.sell(it);return junk.length;}
+ buy(kind){const price=SUPPLIES[kind]?.price;if(!price||!this.vendor||dist(this.vendor,this.p)>80||this.p.gold<price)return false;this.p.gold-=price;this.potions[kind]=(this.potions[kind]||0)+1;return true;}
  collect(d){
   const i=this.drops.indexOf(d);if(i<0)return;
-  if(d.kind==='item'){if(this.inventory.length>=16){this.notice('Túi đầy. Mở túi (I) để vứt hoặc bán bớt.');return;}this.inventory.push(d.item);this.notice(`Nhặt được ${d.item.name} (${d.item.rarityName}).`);}
+  if(d.kind==='item'){if(this.inventory.length>=16){this.notice('Túi đầy. Mở túi (I) để vứt hoặc bán bớt.');return;}d.item.found=true;this.inventory.push(d.item);this.notice(d.item.unid?`Nhặt được món ${d.item.rarityName} chưa giám định!`:`Nhặt được ${d.item.name} (${d.item.rarityName}).`);}
   else if(d.kind==='quest'&&d.quest==='fragment'){this.fragments.push(d.theme);const n=this.fragments.length;this.float(d.x,d.y-24,`+ mảnh vé 000 (${n}/3)`,'#cfe8ff',13);
    this.notice(n===3?'Đủ ba mảnh vé 000! Cầu thang kế tiếp sẽ dẫn tới tầng của Khách Số 0.':n===1?'Mảnh vé 000 (1/3). Zin: “Cậu giữ vé của tui à? Khi nào cần, cứ gọi tui (phím Z).”':`Mảnh vé 000 (${n}/3). Zin đang đợi ở đâu đó dưới hầm.`);}
   else if(d.kind==='quest'){if(d.quest==='stamp'){this.stampFound=true;this.notice(`Có con dấu tầng ${this.depth}! Cầu thang xuống đã mở.`);}else{this.keys++;this.notice(`Nhặt được chìa khóa đồng (đang có ${this.keys}). Giữ lại để mở phòng trùm.`);}this.float(d.x,d.y-24,d.quest==='stamp'?'+ con dấu':'+ chìa khóa','#ffd36b',13);}
-  else if(d.kind==='gold'){this.p.gold+=d.amount;this.float(d.x,d.y-20,`+${d.amount} xu`,'#e7c083',11);}
-  else{this.potions[d.potion]++;this.float(d.x,d.y-20,d.potion==='bread'?'+1 bánh bao':'+1 pin AA','#a0ead4',11);}
+  else if(d.kind==='gem'){this.gems[d.gem]++;this.float(d.x,d.y-20,`+1 ${GEMS[d.gem].name}`,GEMS[d.gem].color,12);}
+  else if(d.kind==='gold'){this.p.gold+=d.amount;this.runGold+=d.amount;this.float(d.x,d.y-20,`+${d.amount} xu`,'#e7c083',11);}
+  else{this.potions[d.potion]=(this.potions[d.potion]||0)+1;this.float(d.x,d.y-20,`+1 ${SUPPLIES[d.potion].name.toLowerCase()}`,'#a0ead4',11);}
   this.drops.splice(i,1);
  }
  // ---- Combat
@@ -1419,9 +1563,12 @@ class Dungeon{
   // Loot: coins often, potions sometimes, gear rarely; elites and bosses drop more and better.
   const drop=(kind,extra)=>this.drops.push({id:this.nextId++,kind,x:e.x+(this.rand()-.5)*40,y:e.y+(this.rand()-.5)*30,...extra});
   if(this.rand()<.65||e.elite||e.boss)drop('gold',{amount:Math.round((3+this.rand()*6)*this.depth*(1+d.goldPct)*(e.boss?6:e.elite?3:1))});
-  if(this.rand()<.12||e.boss)drop('potion',{potion:this.rand()<.6?'bread':'battery'});
+  if(this.rand()<.12||e.boss){const r=this.rand();drop('potion',{potion:r<.5?'bread':r<.8?'battery':r<.93?'lens':'ticket'});}
+  if(this.rand()<(e.boss?1:e.elite?.2:.04)){const kinds=Object.keys(GEMS);drop('gem',{gem:kinds[Math.floor(this.rand()*kinds.length)]});}
   const items=e.boss?3:e.elite?(this.rand()<.7?1:0)+1:this.rand()<.13?1:0;
-  for(let i=0;i<items;i++)drop('item',{item:e.boss&&i===0&&SETS[e.type]?makeSetItem(this.rand,this.depth,e.type):makeItem(this.rand,this.depth,e.boss?1.2:e.elite?.6:0)});
+  for(let i=0;i<items;i++){const item=e.boss&&i===0&&SETS[e.type]?makeSetItem(this.rand,this.depth,e.type):makeItem(this.rand,this.depth,e.boss?1.2:e.elite?.6:0);
+   // The good stuff arrives unidentified: name and affixes hidden until a Kính lúp or Mr. D looks at it.
+   if(['rare','legendary','set'].includes(item.rarity))item.unid=true;drop('item',{item});}
   // Zin's ticket: one "Vé 000" fragment per theme, rarely carried by elites and bosses.
   // Fragments belong to an act (its boss), so each act holds exactly one.
   const theme=this.floor.boss;
@@ -1435,12 +1582,13 @@ class Dungeon{
   p.courage-=value;p.hurt=.25;this.float(p.x,p.y-60,`-${value}`,'#f3889c',13);
   if(p.courage<=0)this.knockout();return true;
  }
+ // Out of courage: Mr. D carries you out. Equipped gear, levels and coins you came down with are kept;
+ // bag items and coins found on this descent stay in the dungeon.
  knockout(){
-  const p=this.p,lost=Math.floor(p.gold*.1);p.gold-=lost;this.stats.knockouts++;
-  Object.assign(p,{x:this.floor.start.x,y:this.floor.start.y,path:[],target:null,pickTarget:null,courage:this.derived.maxCourage});
-  for(const c of this.companions)this.regroup(c,true);
-  for(const e of this.live()){e.aggro=false;e.state='idle';e.x=e.home.x;e.y=e.home.y;if(e.boss)e.hp=e.maxHp;}this.marks=[];this.projectiles=[];
-  this.notice(`Sợ quá! Mr. D dắt bạn về đầu tầng. Đồ vẫn còn${lost?`, rơi mất ${lost} xu`:''}.`);
+  const lostItems=this.inventory.filter(it=>it.found),lostGold=Math.min(this.p.gold,this.runGold);
+  this.inventory=this.inventory.filter(it=>!it.found);this.p.gold-=lostGold;this.runGold=0;this.stats.knockouts++;
+  this.p.courage=0;this.p.path=[];this.p.target=null;this.lost={items:lostItems.map(it=>it.unid?`??? (${it.rarityName})`:it.name),gold:lostGold};
+  this.ending='faint';this.notice('Sợ quá! Mr. D cõng bạn lên khỏi hầm.');
  }
  // ---- Simulation step
  step(dt,input={}){
@@ -1579,7 +1727,7 @@ class Dungeon{
   if(item&&dist(item,p)<44)return{verb:'Nhặt',label:item.item.name};
   if(f.door&&!f.doorOpen&&dist(f.door,p)<72)return{verb:this.keys?'Mở cửa':'Khóa',label:this.keys?`Mở cửa phòng trùm (còn ${this.keys} chìa)`:'Cửa phòng trùm · cần chìa khóa đồng'};
   if(dist(f.stairs,p)<46)return{verb:this.stairsLocked?'Khóa':'Xuống',label:this.stairsLocked?(isBossFloor(this.depth)?'Cầu thang (hạ màn trùm trước)':'Cầu thang niêm phong · cần con dấu'):`Cầu thang xuống tầng ${this.depth+1}`};
-  if(dist(f.exitUp,p)<46)return{verb:'Rời hầm',label:'Thang lên · kết thúc chuyến'};
+  if(dist(f.exitUp,p)<46)return isRestStop(this.depth)?{verb:'Rời hầm',label:'Thang lên · về an toàn, giữ hết đồ'}:{verb:'Sập',label:'Thang lên bị sập · dùng Vé về'};
   if(this.vendor&&dist(this.vendor,p)<56)return{verb:'Mua bán',label:'Quầy Mr. D'};
   return null;
  }
@@ -1597,7 +1745,7 @@ class Dungeon{
 
 return{TILE,MAP_W,MAP_H,rng,THEMES,HELL,ACT_BOSSES,bossFor,themeFor,isBossFloor,DOOR,generateFloor,isFloor,floorPassable,lineOfSight,flowField,ENEMIES,RARITY,SLOTS,makeItem,makeSetItem,describeBase,SKILLS,xpForLevel,Dungeon};})();
 // ---- dungeon-view.mjs
-const {RARITY_COLOR,createDungeonView,itemCard,bagHtml,shopHtml,treeHtml,townHtml}=(()=>{
+const {RARITY_COLOR,heroLook,heroSprite,createDungeonView,itemName,itemCard,bagHtml,shopHtml,treeHtml,townHtml}=(()=>{
 // Hầm Ma renderer and pointer input. Draws the dungeon simulation; never changes rules itself.
 
 
@@ -1606,12 +1754,27 @@ const {RARITY_COLOR,createDungeonView,itemCard,bagHtml,shopHtml,treeHtml,townHtm
 const RARITY_COLOR={common:'#e6e9e4',magic:'#7fb6ff',rare:'#ffd36b',legendary:'#ff9d4d',set:'#7ee08a'};
 const QUEST={stamp:{color:'#f3889c',label:d=>`Con dấu tầng ${d}`},key:{color:'#ffd36b',label:()=>'Chìa khóa đồng'},fragment:{color:'#cfe8ff',label:()=>'Mảnh vé 000'}};
 const CANDY=['#f3889c','#a0ead4','#ffd36b','#c3a7ed'];
+const SUPPLY_ICON={bread:'bread',battery:'battery',ticket:'home',lens:'lens'};
+
+// What D looks like with this gear on: each worn item's style and rarity colours.
+const styleOf=it=>it.style??Math.max(0,SLOTS[it.slot].bases.findIndex(b=>it.name.startsWith(b)));
+const tintOf=it=>GEAR_TINT[it.rarity]||GEAR_TINT.common;
+function heroLook(equipped,town){
+ const part=slot=>{const it=equipped[slot];return it?{style:styleOf(it),tint:tintOf(it)}:null;};
+ const look={hat:part('hat'),coat:part('coat'),torch:part('torch'),bag:part('bag'),shoes:equipped.shoes?tintOf(equipped.shoes)[0]:null,charm:equipped.charm?tintOf(equipped.charm)[0]:null,badge:equipped.badge?tintOf(equipped.badge)[0]:null,cape:town?.costume==='cape'};
+ // Mr. D's town costumes show when no coat is worn: the raincoat, or D's own yellow hoodie.
+ if(!look.coat&&town?.costume==='raincoat')look.coat={style:1,tint:['#efd43a','#c3a822']};
+ if(!look.coat&&town?.costume==='hoodie')look.coat={style:2,tint:['#efc23a','#c39a22']};
+ return look;
+}
+const heroCache=new Map();
+function heroSprite(look,frame=0){const key=JSON.stringify(look)+frame;let c=heroCache.get(key);if(!c){c=paintHero(look,frame);heroCache.set(key,c);if(heroCache.size>80)heroCache.delete(heroCache.keys().next().value);}return c;}
 
 // `custom` maps sprite names to finished artist images; anything missing falls back to the painted placeholder.
 function createDungeonView(canvas,ctx,{atlas,crops,zombie,neck,custom={}}){
  const art={sheet:paintSheetGhost(),skeleton:paintSkeleton(),lantern:paintLanternGhost(),mrd:paintMrD(),...custom};
  if(custom.zombie)zombie=custom.zombie;if(custom.neck)neck=custom.neck;
- const cats={na:paintCat('na'),bo:paintCat('bo'),zin:paintCat('zin')},icons=Object.fromEntries(ICON_NAMES.map(n=>[n,paintIcon(n)]));
+ const cats=Object.fromEntries(['na','bo','zin'].map(k=>[k,[0,1,2,3,4].map(f=>paintCat(k,f))])),icons=Object.fromEntries(ICON_NAMES.map(n=>[n,paintIcon(n)])),gems=Object.fromEntries(Object.entries(GEMS).map(([k,g])=>[k,paintGem(g.color)]));
  const zcrop=()=>custom.zombie?full(zombie):[0,0,42,82],ncrop=()=>custom.neck?full(neck):[0,0,44,114];
  const fog=document.createElement('canvas');fog.width=MAP_W;fog.height=MAP_H;const fg=fog.getContext('2d');
  const shade=document.createElement('canvas'),sg=shade.getContext('2d');
@@ -1656,7 +1819,8 @@ function createDungeonView(canvas,ctx,{atlas,crops,zombie,neck,custom={}}){
   for(const d of dg.drops){
    const bob=Math.sin(elapsed*3+d.id)*2;
    if(d.kind==='gold'){glow(d.x,d.y-8,18,'#e7c083',.35);ctx.drawImage(icons.coin,d.x-14,d.y-22+bob,20,20);ctx.drawImage(icons.coin,d.x-2,d.y-17+bob,18,18);}
-   else if(d.kind==='potion'){glow(d.x,d.y-8,14,d.potion==='bread'?'#f3889c':'#5e95e8',.3);ctx.drawImage(icons[d.potion==='bread'?'bread':'battery'],d.x-14,d.y-28+bob,28,28);}
+   else if(d.kind==='potion'){glow(d.x,d.y-8,14,{bread:'#f3889c',battery:'#5e95e8',ticket:'#a0ead4',lens:'#cfe8ff'}[d.potion],.3);ctx.drawImage(icons[SUPPLY_ICON[d.potion]],d.x-14,d.y-28+bob,28,28);}
+   else if(d.kind==='gem'){const col=GEMS[d.gem].color;glow(d.x,d.y-12,22,col,.5);ctx.drawImage(gems[d.gem],d.x-13,d.y-28+bob,26,26);}
    else if(d.kind==='quest'){const col=QUEST[d.quest].color,bob=Math.sin(elapsed*3)*2;ctx.save();ctx.globalAlpha=.3+.15*Math.sin(elapsed*3);ctx.fillStyle=col;ctx.fillRect(d.x-3,d.y-90,6,90);ctx.restore();
     if(d.quest==='stamp'){ctx.fillStyle='#5b3a26';ctx.fillRect(d.x-3,d.y-22+bob,6,10);ctx.fillStyle='#7c5435';ctx.beginPath();ctx.arc(d.x,d.y-24+bob,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#c23b3b';ctx.fillRect(d.x-8,d.y-12+bob,16,7);ctx.fillStyle='#f3889c';ctx.fillRect(d.x-8,d.y-12+bob,16,2);}
     else if(d.quest==='fragment'){ctx.fillStyle='#e9e4d6';ctx.fillRect(d.x-9,d.y-20+bob,18,11);ctx.fillStyle='#c23b3b';ctx.fillRect(d.x-7,d.y-18+bob,5,3);ctx.fillStyle='#5b3a26';ctx.fillRect(d.x+1,d.y-17+bob,6,1);ctx.fillRect(d.x+1,d.y-14+bob,6,1);ctx.strokeStyle='#cfe8ff';ctx.lineWidth=1;ctx.strokeRect(d.x-9,d.y-20+bob,18,11);}
@@ -1671,7 +1835,8 @@ function createDungeonView(canvas,ctx,{atlas,crops,zombie,neck,custom={}}){
   ctx.fillStyle='#05090f';ctx.fillRect(s.x-22,s.y-18,44,36);for(let i=0;i<4;i++){ctx.fillStyle=i%2?'#1b2733':'#24323f';ctx.fillRect(s.x-20+i*3,s.y-16+i*8,40-i*6,6);}
   ctx.strokeStyle=dg.stairsLocked?'#f3889c':'#a0ead4';ctx.lineWidth=2;ctx.strokeRect(s.x-22,s.y-18,44,36);
   if(dg.stairsLocked){ctx.fillStyle='#f3889c';ctx.fillRect(s.x-5,s.y-4,10,8);ctx.strokeStyle='#f3889c';ctx.beginPath();ctx.arc(s.x,s.y-5,4,Math.PI,0);ctx.stroke();}
-  ctx.fillStyle='#5b3a26';for(let i=0;i<5;i++)ctx.fillRect(u.x-10,u.y-34+i*8,20,2);ctx.fillRect(u.x-12,u.y-36,3,40);ctx.fillRect(u.x+9,u.y-36,3,40);
+  if(isRestStop(dg.depth)||f.special){ctx.fillStyle='#5b3a26';for(let i=0;i<5;i++)ctx.fillRect(u.x-10,u.y-34+i*8,20,2);ctx.fillRect(u.x-12,u.y-36,3,40);ctx.fillRect(u.x+9,u.y-36,3,40);}
+  else{ctx.fillStyle='#3a2418';ctx.fillRect(u.x-12,u.y-6,24,6);ctx.fillRect(u.x-8,u.y-14,4,8);ctx.fillRect(u.x+3,u.y-10,6,4);}
   if(f.door&&!f.doorOpen){for(const i of f.door.tiles){const x=(i%MAP_W)*TILE,y=Math.floor(i/MAP_W)*TILE;ctx.fillStyle='#3a2418';ctx.fillRect(x,y,TILE,TILE);ctx.fillStyle='#7c5435';ctx.fillRect(x+3,y+3,TILE-6,TILE-6);ctx.fillStyle='#5b3a26';ctx.fillRect(x+TILE/2-1,y+3,2,TILE-6);ctx.fillStyle='#b08a4a';ctx.fillRect(x+3,y+8,TILE-6,3);ctx.fillRect(x+3,y+TILE-11,TILE-6,3);}
    const k=f.door;ctx.fillStyle='#ffd36b';ctx.fillRect(k.x-6,k.y-4,12,10);ctx.strokeStyle='#ffd36b';ctx.lineWidth=2;ctx.beginPath();ctx.arc(k.x,k.y-5,4,Math.PI,0);ctx.stroke();ctx.fillStyle='#3a2418';ctx.fillRect(k.x-1,k.y-1,2,4);}
   if(dg.vendor){const v=dg.vendor;ctx.fillStyle='#3a2418';ctx.fillRect(v.x-30,v.y-92,3,86);ctx.fillRect(v.x+27,v.y-92,3,86);ctx.fillStyle='#c23b3b';ctx.fillRect(v.x-34,v.y-98,68,10);ctx.fillStyle='#f4f1e6';for(let i=0;i<8;i+=2)ctx.fillRect(v.x-34+i*8.5,v.y-98,8.5,10);}
@@ -1692,7 +1857,7 @@ function createDungeonView(canvas,ctx,{atlas,crops,zombie,neck,custom={}}){
  function overlays(){
   for(const e of dg.live()){if(!e.aggro&&!e.elite&&!e.boss)continue;const w=e.boss?0:30,y=e.y-(e.type==='sheet'?54:e.type==='lantern'?66:e.type==='skeleton'?70:0);if(!e.boss){ctx.fillStyle='#0a1520';ctx.fillRect(e.x-w/2,y,w,4);ctx.fillStyle=e.elite?'#7fb6ff':'#a0ead4';ctx.fillRect(e.x-w/2,y,w*e.hp/e.maxHp,4);}if(e.elite)label(e.x,y-6,e.name,'#7fb6ff');}
   for(const c of dg.companions){if(c.state==='away')continue;const max=dg.companionMax(),y=c.y-50;label(c.x,y-6,c.name,'#cfe8ff','#07131db0');if(c.courage<max){ctx.fillStyle='#0a1520';ctx.fillRect(c.x-14,y,28,3);ctx.fillStyle='#f3889c';ctx.fillRect(c.x-14,y,28*Math.max(0,c.courage)/max,3);}}
-  for(const d of dg.drops)if(d.kind==='item'){d.labelBox=label(d.x,d.y-44,d.item.name,RARITY_COLOR[d.item.rarity]);}else if(d.kind==='quest')label(d.x,d.y-34,QUEST[d.quest].label(dg.depth),QUEST[d.quest].color);
+  for(const d of dg.drops)if(d.kind==='item'){d.labelBox=label(d.x,d.y-44,itemName(d.item),RARITY_COLOR[d.item.rarity]);}else if(d.kind==='gem')label(d.x,d.y-34,GEMS[d.gem].name,GEMS[d.gem].color);else if(d.kind==='quest')label(d.x,d.y-34,QUEST[d.quest].label(dg.depth),QUEST[d.quest].color);
   if(dg.zin)label(dg.zin.x,dg.zin.y-58,`Zin · ${Math.ceil(dg.zin.t)}s`,'#cfe8ff');if(dg.floor.special==='zin')label(dg.floor.zinSpot.x,dg.floor.zinSpot.y-58,'Zin · Khách Số 0','#ffd9a8');
   for(const f of dg.floaters){const k=1-(f.until-dg.time)/(f.life||1.1);ctx.font=`bold ${f.size}px system-ui`;ctx.textAlign='center';ctx.fillStyle='#061421';const rise=f.life>2?8:24;ctx.fillText(f.text,f.x+1,f.y-k*rise+1);ctx.fillStyle=f.color;ctx.fillText(f.text,f.x,f.y-k*rise);}
   const n=dg.nearby();if(n)label(dg.p.x,dg.p.y-86,(mobile?'':'E · ')+n.label,'#ffe5ad');
@@ -1741,6 +1906,7 @@ function createDungeonView(canvas,ctx,{atlas,crops,zombie,neck,custom={}}){
   detach(){dg=null;hold=false;},
   autoAim,
   icons,
+  gems,
   get mouse(){return mouse;},
   step(dt){elapsed+=dt;if(hold&&mouse&&dg){holdTimer-=dt;if(holdTimer<=0){holdTimer=.18;if(!dg.p.target&&!dg.p.pickTarget)dg.moveTo(mouse.x,mouse.y);}}},
   pointerDown(e){
@@ -1766,32 +1932,66 @@ function createDungeonView(canvas,ctx,{atlas,crops,zombie,neck,custom={}}){
    ctx.drawImage(floorArt,0,0,MAP_W*TILE,MAP_H*TILE);
    fixtures();drops();telegraphs();effects();
    const p=dg.p,actors=[...dg.enemies.map(e=>({y:e.y,e})),...dg.companions.filter(c=>c.state!=='away').map(c=>({y:c.y,c})),{y:p.y,p:true}];if(dg.vendor)actors.push({y:dg.vendor.y,v:true});if(dg.zin)actors.push({y:dg.zin.y,z:dg.zin});if(dg.floor.special==='zin')actors.push({y:dg.floor.zinSpot.y,z:{...dg.floor.zinSpot,face:Math.PI,still:true}});actors.sort((a,b)=>a.y-b.y);
-   for(const a of actors){if(a.z){const z=a.z;const zi=art.zin||cats.zin,hop=z.still?0:Math.abs(Math.sin(elapsed*5))*-4;ctx.save();ctx.globalAlpha=.4+.15*Math.sin(elapsed*3);ctx.fillStyle='#ffd9a8';ctx.beginPath();ctx.ellipse(z.x,z.y-20,26,30,0,0,Math.PI*2);ctx.fill();ctx.restore();sprite(zi,full(zi),z.x,z.y+hop,art.zin?68:44,z.face||0,.92);continue;}if(a.c){const c=a.c,bob=c.moving?Math.abs(Math.sin(elapsed*12+c.sprite))*-2.4:0,cat=cats[c.id];sprite(cat,full(cat),c.x,c.y+bob,40,c.face,c.hurt>0?.6:1);continue;}if(a.e)drawEnemy(a.e);else if(a.v){const v=dg.vendor;sprite(art.mrd,full(art.mrd),v.x,v.y-10,70,Math.PI);ctx.fillStyle='#5b3a26';ctx.fillRect(v.x-30,v.y-30,60,30);ctx.fillStyle='#7c5435';ctx.fillRect(v.x-30,v.y-32,60,5);ctx.fillStyle='#e7c083';ctx.font='9px system-ui';ctx.textAlign='center';ctx.fillText('BÁNH BAO · PIN',v.x,v.y-12);}else sprite(atlas,crops[0],p.x,p.y,68,p.face,p.dash>0?.55:1);}
+   for(const a of actors){if(a.z){const z=a.z;const zi=art.zin||cats.zin[z.still?0:1+Math.floor(elapsed*9)%4],hop=z.still?0:Math.abs(Math.sin(elapsed*5))*-4;ctx.save();ctx.globalAlpha=.4+.15*Math.sin(elapsed*3);ctx.fillStyle='#ffd9a8';ctx.beginPath();ctx.ellipse(z.x,z.y-20,26,30,0,0,Math.PI*2);ctx.fill();ctx.restore();sprite(zi,full(zi),z.x,z.y+hop,art.zin?68:44,z.face||0,.92);continue;}if(a.c){const c=a.c,bob=c.moving?Math.abs(Math.sin(elapsed*12+c.sprite))*-2.4:0,cat=cats[c.id][c.moving?1+Math.floor(elapsed*9+c.sprite)%4:0];sprite(cat,full(cat),c.x,c.y+bob*.5,40,c.face,c.hurt>0?.6:1);continue;}if(a.e)drawEnemy(a.e);else if(a.v){const v=dg.vendor;sprite(art.mrd,full(art.mrd),v.x,v.y-10,70,Math.PI);ctx.fillStyle='#5b3a26';ctx.fillRect(v.x-30,v.y-30,60,30);ctx.fillStyle='#7c5435';ctx.fillRect(v.x-30,v.y-32,60,5);ctx.fillStyle='#e7c083';ctx.font='9px system-ui';ctx.textAlign='center';ctx.fillText('BÁNH BAO · PIN',v.x,v.y-12);}else{const h=heroSprite(heroLook(dg.equipped,dg.town),p.moving?1+Math.floor(elapsed*9)%4:0);sprite(h,full(h),p.x,p.y,70,p.face,p.dash>0?.55:1);}}
    projectiles();lighting();overlays();hud();
   },
  };
 }
 
-// HTML for the bag and shop dialogs. The app wires the buttons by their data attributes.
+// HTML for the bag, shop and forge dialogs. The app wires the buttons by their data attributes.
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function itemCard(item,actions=''){if(!item)return'<div class="item empty">Trống</div>';return`<div class="item" style="--rarity:${RARITY_COLOR[item.rarity]}"><b>${esc(item.name)}</b><small>${esc(SLOTS[item.slot].label)} · ${esc(item.rarityName)} · cấp ${item.ilvl}</small><span>${esc(describeBase(item))}</span>${item.affixes.map(a=>`<span>${esc(a)}</span>`).join('')}${item.set?`<span class="set-line">${esc(item.setName)}: ${esc(item.setText)}</span>`:''}${actions}</div>`;}
-function bagHtml(dg){
- const d=dg.derived;
- return`<span class="eyebrow">TÚI ĐỒ · CẤP ${dg.p.level}</span><h2>Đồ nghề đi hầm</h2>
- <p class="stats-line">Sát thương ${Math.round(d.damage)} · Chí mạng ${Math.round(d.crit*100)}% · Giáp ${d.armor} · Can đảm ${d.maxCourage} · Pin ${d.maxBattery} · Tốc ${Math.round(d.speed)}</p>
- <div class="items">${Object.keys(SLOTS).map(k=>itemCard(dg.equipped[k])).join('')}</div>
+const urls={};
+const iconUrl=name=>urls[name]||(urls[name]=paintIcon(name).toDataURL());
+const gemUrl=gem=>urls['gem:'+gem]||(urls['gem:'+gem]=paintGem(GEMS[gem].color).toDataURL());
+const itemName=it=>(it.unid?`??? ${SLOTS[it.slot].bases[styleOf(it)]||SLOTS[it.slot].label}`:it.name)+(it.plus?` +${it.plus}`:'');
+// A rough worth, to mark bag items that beat what is worn in the same slot.
+const WEIGHT={dmg:3,dmgPct:1.5,crit:2,courage:.5,armor:.8,battery:.4,regen:4,speed:2,gold:.3,onBreak:2,lastStand:.4,firstHit:.3,lowCrit:20,leech:3,dashCd:5};
+const worth=it=>Object.entries(it.stats).reduce((t,[k,v])=>t+(WEIGHT[k]||0)*v,0);
+function compare(it,worn){if(it.unid)return'<em class="cmp">?</em>';if(!worn)return'<em class="cmp up">▲ ô trống</em>';const d=worth(it)-worth(worn);return d>.5?'<em class="cmp up">▲ tốt hơn</em>':d<-.5?'<em class="cmp down">▼ kém hơn</em>':'<em class="cmp">= ngang</em>';}
+function itemCard(item,actions='',worn){
+ if(!item)return'<div class="item empty">Trống</div>';
+ const slot=SLOTS[item.slot],base=describeBase({...item,base:plusBase(item)}),holes=socketsFor(item),gems=item.gems||[];
+ const lines=item.unid?`<span class="hidden-affix">${item.affixes.length} thuộc tính ẩn · cần giám định</span>`:item.affixes.map(a=>`<span>${esc(a)}</span>`).join('');
+ const sockets=holes?`<span class="sockets">${gems.map(g=>`<img src="${gemUrl(g)}" alt="">${esc(GEMS[g].text)}`).join(' ')}${'<i class="hole"></i>'.repeat(Math.max(0,holes-gems.length))}</span>`:'';
+ return`<div class="item" style="--rarity:${RARITY_COLOR[item.rarity]}"><div class="item-head"><img src="${iconUrl(item.slot)}" alt=""><b>${esc(itemName(item))}</b>${worn!==undefined?compare(item,worn):''}</div><small><span class="body-tag">${esc(slot.body)}</span> ${esc(slot.label)} · ${esc(item.rarityName)} · cấp ${item.ilvl}</small><span>${esc(base)}</span>${lines}${sockets}${item.set&&!item.unid?`<span class="set-line">${esc(item.setName)}: ${esc(item.setText)}</span>`:''}${actions}</div>`;
+}
+const gemButtons=(it,pouch,attr,key)=>it.unid||(it.gems||[]).length>=socketsFor(it)?'':Object.keys(GEMS).filter(g=>pouch[g]>0).map(g=>`<button data-${attr}="${key}:${g}"><img class="btn-icon" src="${gemUrl(g)}" alt="">Gắn ${esc(GEMS[g].name)}</button>`).join('');
+// The gear screen: D in the middle wearing what is equipped, body slots around him.
+function bagHtml(dg,{sel=null}={}){
+ const d=dg.derived,hero=heroSprite(heroLook(dg.equipped,dg.town),0).toDataURL();
+ const tile=k=>{const it=dg.equipped[k],s=SLOTS[k];return`<button class="slot${sel===k?' sel':''}" data-slot="${k}" style="--rarity:${it?RARITY_COLOR[it.rarity]:'#3a4a55'}"><img src="${iconUrl(k)}" alt=""><span><small>${s.body} · ${s.label}</small><b>${it?esc(itemName(it)):'Trống'}</b></span></button>`;};
+ const supplies=['bread','battery','ticket','lens'].map(k=>`<span class="supply"><img src="${iconUrl(SUPPLY_ICON[k])}" alt="">${SUPPLIES[k].name} ×${dg.potions[k]||0}</span>`).join('');
+ const gemRow=Object.entries(GEMS).map(([k,g])=>`<span class="supply"><img src="${gemUrl(k)}" alt="">${g.name} ×${dg.gems[k]||0}</span>`).join('');
+ const list=dg.inventory.map((it,i)=>({it,i})).filter(({it})=>!sel||it.slot===sel);
+ const worn=sel&&dg.equipped[sel];
+ return`<span class="eyebrow">ĐỒ NGHỀ · CẤP ${dg.p.level}</span><h2>Mặc gì đi hầm?</h2>
+ <div class="doll"><div class="doll-col">${['hat','charm','badge','torch'].map(tile).join('')}</div>
+ <div class="doll-mid"><img class="doll-hero" src="${hero}" alt="D với đồ đang mặc"><p class="stats-line">Sát thương ${Math.round(d.damage)} · Chí mạng ${Math.round(d.crit*100)}%<br>Giáp ${d.armor} · Can đảm ${d.maxCourage}<br>Pin ${d.maxBattery} · Tốc ${Math.round(d.speed)}</p></div>
+ <div class="doll-col">${['coat','bag','shoes'].map(tile).join('')}</div></div>
+ ${worn?`<h3>Đang mặc ở ${SLOTS[sel].body.toLowerCase()}</h3><div class="items">${itemCard(worn,`<div class="item-actions">${gemButtons(worn,dg.gems,'gemeq',sel)}</div>`)}</div>`:''}
+ <h3>${sel?`Trong túi, mặc được ở ${SLOTS[sel].body.toLowerCase()} · <button class="link" data-slot="">xem hết</button>`:'Trong túi'} (${dg.inventory.length}/16)</h3>
+ <p class="hint">Đồ nhặt trong chuyến này mà chưa mặc sẽ mất nếu bạn ngất. Mặc vào, hoặc về bằng Vé về / thang ở trạm nghỉ.</p>
+ <div class="items">${list.map(({it,i})=>itemCard(it,`<div class="item-actions">${it.unid?`<button disabled>Chưa giám định</button>${dg.potions.lens?`<button data-lens="${i}">Dùng Kính lúp</button>`:''}`:`<button data-equip="${i}">Mặc vào ${SLOTS[it.slot].body.toLowerCase()}</button>`}${gemButtons(it,dg.gems,'gem',i)}<button data-drop="${i}">Vứt</button></div>${it.found?'<small class="found">Nhặt trong chuyến này</small>':''}`,dg.equipped[it.slot])).join('')||`<p>${sel?'Không có món nào cho chỗ này.':'Túi trống. Hạ màn diễn viên để nhặt đồ.'}</p>`}</div>
+ <h3>Đồ dùng</h3><div class="supplies">${supplies}</div><div class="supplies">${gemRow}</div>
  <h3>Bạn đồng hành</h3><div class="items">${dg.companions.map(c=>`<div class="item" style="--rarity:#cfe8ff"><b>${c.name}</b><small>${c.id==='na'?'Ném kẹo · cổ vũ khi bạn sợ':'Rọi điện thoại · đánh hơi con dấu, chìa khóa'}</small><span>Tin tưởng ${Math.round(c.trust)}/100</span><span>${c.state==='away'?`Đang nghỉ ngoài cửa (${Math.ceil(c.awayT)} giây)`:`Can đảm ${Math.max(0,Math.round(c.courage))}/${dg.companionMax()}`}</span></div>`).join('')}</div>
  <p class="stats-line">Mảnh vé 000: ${dg.fragments.length}/3${dg.zinState==='staff'?' · Zin là nhân viên, gọi được mỗi tầng':dg.zinState==='gone'?' · Zin đã được đóng mộc vé':dg.fragments.length?' · gọi Zin một lần mỗi tầng (Z)':''}</p>
- <div class="dialog-actions"><button data-open="tree">Cây kỹ năng${dg.skillPoints?` · ${dg.skillPoints} điểm chưa dùng`:''}</button></div>
- <h3>Trong túi (${dg.inventory.length}/16)</h3>
- <div class="items">${dg.inventory.map((it,i)=>itemCard(it,`<div class="item-actions"><button data-equip="${i}">Trang bị</button><button data-drop="${i}">Vứt</button></div>`)).join('')||'<p>Túi trống. Hạ màn diễn viên để nhặt đồ.</p>'}</div>
- <div class="dialog-actions"><button id="resume">Quay lại hầm</button></div>`;
+ <div class="dialog-actions"><button data-open="tree">Cây kỹ năng${dg.skillPoints?` · ${dg.skillPoints} điểm chưa dùng`:''}</button><button id="resume">Quay lại hầm</button></div>`;
 }
-function shopHtml(dg){
- return`<span class="eyebrow">QUẦY MR. D</span><h2>Bánh bao, pin, mua đồ cũ</h2><p>Bạn có ${dg.p.gold} xu.</p>
- <div class="dialog-actions"><button data-buy="bread" ${dg.p.gold<20?'disabled':''}>Mua bánh bao (+can đảm) · 20 xu · đang có ${dg.potions.bread}</button><button data-buy="battery" ${dg.p.gold<20?'disabled':''}>Mua pin AA (+pin) · 20 xu · đang có ${dg.potions.battery}</button></div>
- <div class="dialog-actions"><button data-respec="1" ${dg.p.gold<RESPEC_COST||!Object.keys(dg.tree).length?'disabled':''}>Tẩy điểm kỹ năng · ${RESPEC_COST} xu</button></div>
- <h3>Bán đồ trong túi</h3><div class="items">${dg.inventory.map((it,i)=>itemCard(it,`<div class="item-actions"><button data-sell="${i}">Bán · ${it.value} xu</button></div>`)).join('')||'<p>Không có gì để bán.</p>'}</div>
+// Forge rows for a list of [key, item, where]: upgrade and identify buttons. Used in the dungeon shop and in town.
+function forgeHtml(rows,gold,upAttr,idAttr,flash){
+ return rows.map(([key,it,where])=>{const plus=it.plus||0,cost=upgradeCost(it),chance=Math.round(upgradeChance(plus)*100);
+  const up=it.unid?'':plus>=MAX_PLUS?'<button disabled>Tối đa +10</button>':`<button data-${upAttr}="${key}" ${gold<cost?'disabled':''}>Nâng lên +${plus+1} · ${cost} xu · ${chance}%${plus>=5?' · hỏng thì tụt 1':''}</button>`;
+  const id=it.unid?`<button data-${idAttr}="${key}" ${gold<identifyCost(it)?'disabled':''}>Giám định · ${identifyCost(it)} xu</button>`:'';
+  return itemCard(it,`${flash?.key===key?`<p class="forge-msg">${esc(flash.text)}</p>`:''}<div class="item-actions">${up}${id}</div><small class="where">${where}</small>`);}).join('');
+}
+const forgeRows=(equipped,inventory)=>[...Object.entries(equipped).filter(([,it])=>it).map(([k,it])=>['e:'+k,it,'Đang mặc']),...inventory.map((it,i)=>['i:'+i,it,'Trong túi'])];
+function shopHtml(dg,{msg=''}={}){
+ const g=dg.p.gold;
+ return`<span class="eyebrow">QUẦY MR. D · TRẠM NGHỈ TẦNG ${dg.depth}</span><h2>Bạn có ${g} xu</h2>${typeof msg==='string'&&msg?`<p class="forge-msg">${esc(msg)}</p>`:''}
+ <h3>Đồ dùng</h3><div class="dialog-actions">${Object.entries(SUPPLIES).map(([k,s])=>`<button data-buy="${k}" ${g<s.price?'disabled':''}><img class="btn-icon" src="${iconUrl(SUPPLY_ICON[k])}" alt="">${s.name} · ${s.price} xu · có ${dg.potions[k]||0}<small>${esc(s.text)}</small></button>`).join('')}</div>
+ <h3>Lò rèn: nâng cấp và giám định</h3><div class="items">${forgeHtml(forgeRows(dg.equipped,dg.inventory),g,'up','ident',msg)}</div>
+ <h3>Bán đồ trong túi</h3><div class="dialog-actions"><button data-junk="1" ${dg.inventory.some(i=>i.rarity==='common')?'':'disabled'}>Bán hết đồ Thường</button><button data-respec="1" ${g<RESPEC_COST||!Object.keys(dg.tree).length?'disabled':''}>Tẩy điểm kỹ năng · ${RESPEC_COST} xu</button></div>
+ <div class="items">${dg.inventory.map((it,i)=>itemCard(it,`<div class="item-actions"><button data-sell="${i}">Bán · ${dg.sellValue(it)} xu</button></div>`)).join('')||'<p>Không có gì để bán.</p>'}</div>
  <div class="dialog-actions"><button id="resume">Quay lại hầm</button></div>`;
 }
 
@@ -1802,16 +2002,16 @@ function treeHtml({level,tree}){
  return`<span class="eyebrow">CÂY KỸ NĂNG · CẤP ${level}</span><h2>${pts} điểm chưa dùng</h2><p>Mỗi cấp được 1 điểm. Tẩy điểm ở quầy Mr. D (${RESPEC_COST} xu).</p><div class="tree">${Object.entries(BRANCHES).map(([b,name])=>`<div class="branch"><h3>${name}</h3>${col(b)}</div>`).join('')}</div><div class="dialog-actions"><button id="resume">Quay lại hầm</button></div>`;
 }
 // Town hub between descents, working on the saved character.
-function townHtml(character,name){
+function townHtml(character,name,{msg=''}={}){
  const town=character.town,kinds={stand:'Nâng cấp quầy',costume:'Trang phục',gadget:'Đồ chơi của Bơ'};
  const card=t=>{const price=townPrice(town,t.id),lvl=town.stand[t.id]||0,owned=t.kind==='costume'?town.costumes.includes(t.id):t.kind==='gadget'&&town.gadgets.includes(t.id);
   const status=t.kind==='stand'?`Cấp ${lvl}/${t.levels.length}`:owned?(town.costume===t.id?'Đang mặc':'Đã có'):'';
   const btn=t.kind==='costume'&&owned?`<button data-town="${t.id}">${town.costume===t.id?'Cởi ra':'Mặc'}</button>`:price==null?'':`<button data-town="${t.id}" ${character.gold<price?'disabled':''}>Mua · ${price} xu</button>`;
   return`<div class="item" style="--rarity:#e7c083"><b>${esc(t.name)}</b><small>${status}</small><span>${esc(t.text(Math.max(1,lvl+(t.kind==='stand'&&price!=null?1:0))))}</span><div class="item-actions">${btn}</div></div>`;};
- return`<span class="eyebrow">QUẦY MR. D · GIỮA HAI CHUYẾN</span><h2>${esc(name)} có ${character.gold||0} xu</h2><p>Mua sắm ở đây được giữ cho mọi chuyến xuống hầm sau.</p>${Object.entries(kinds).map(([k,label])=>`<h3>${label}</h3><div class="items">${TOWN.filter(t=>t.kind===k).map(card).join('')}</div>`).join('')}<div class="dialog-actions"><button data-respec="town" ${(character.gold||0)<RESPEC_COST||!Object.keys(character.tree||{}).length?'disabled':''}>Tẩy điểm kỹ năng · ${RESPEC_COST} xu</button><button id="resume">Xong</button></div>`;
+ return`<span class="eyebrow">QUẦY MR. D · GIỮA HAI CHUYẾN</span><h2>${esc(name)} có ${character.gold||0} xu</h2>${typeof msg==='string'&&msg?`<p class="forge-msg">${esc(msg)}</p>`:''}<p>Mua sắm ở đây được giữ cho mọi chuyến xuống hầm sau.${character.checkpoint>1?` Chuyến sau xuất phát từ trạm nghỉ tầng ${character.checkpoint}.`:''}</p><h3>Đồ dùng mang theo</h3><div class="dialog-actions">${Object.entries(SUPPLIES).map(([k,s])=>`<button data-tbuy="${k}" ${(character.gold||0)<s.price?'disabled':''}><img class="btn-icon" src="${iconUrl(SUPPLY_ICON[k])}" alt="">${s.name} · ${s.price} xu · có ${character.potions?.[k]||0}</button>`).join('')}</div><h3>Lò rèn</h3><div class="items">${forgeHtml(forgeRows(character.equipped||{},character.inventory||[]),character.gold||0,'tup','tident',msg)||'<p>Chưa có đồ.</p>'}</div>${Object.entries(kinds).map(([k,label])=>`<h3>${label}</h3><div class="items">${TOWN.filter(t=>t.kind===k).map(card).join('')}</div>`).join('')}<div class="dialog-actions"><button data-respec="town" ${(character.gold||0)<RESPEC_COST||!Object.keys(character.tree||{}).length?'disabled':''}>Tẩy điểm kỹ năng · ${RESPEC_COST} xu</button><button id="resume">Xong</button></div>`;
 }
 
-return{RARITY_COLOR,createDungeonView,itemCard,bagHtml,shopHtml,treeHtml,townHtml};})();
+return{RARITY_COLOR,heroLook,heroSprite,createDungeonView,itemName,itemCard,bagHtml,shopHtml,treeHtml,townHtml};})();
 // ---- save.mjs
 const {SAVE_VERSION,COOKIE_DEVICE,COOKIE_PLAYER,cleanName,nameKey,deviceType,SaveStore,snapshotDungeon,restoreDungeon,browserStorage,browserCookies}=(()=>{
 // Save games, kept in the player's own browser. There is no server: saves live in localStorage,
@@ -1881,22 +2081,22 @@ class SaveStore{
 // ---- Hầm Ma snapshots: plain JSON, nothing that depends on the current floor's layout.
 function snapshotDungeon(dg){
  return{
-  seed:dg.seed,depth:dg.depth,stats:{...dg.stats},
-  character:{level:dg.p.level,xp:dg.p.xp,gold:dg.p.gold,potions:{...dg.potions},keys:dg.keys,inventory:dg.inventory.map(clone),equipped:Object.fromEntries(Object.entries(dg.equipped).map(([k,v])=>[k,v?clone(v):null])),trust:Object.fromEntries(dg.companions.map(c=>[c.id,Math.round(c.trust)])),tree:{...dg.tree},town:clone(dg.town),fragments:[...dg.fragments],zinState:dg.zinState,zinFloorDone:dg.zinFloorDone},
+  seed:dg.seed,depth:dg.depth,stats:{...dg.stats},runGold:dg.runGold||0,
+  character:{level:dg.p.level,xp:dg.p.xp,gold:dg.p.gold,potions:{...dg.potions},keys:dg.keys,inventory:dg.inventory.map(clone),equipped:Object.fromEntries(Object.entries(dg.equipped).map(([k,v])=>[k,v?clone(v):null])),trust:Object.fromEntries(dg.companions.map(c=>[c.id,Math.round(c.trust)])),tree:{...dg.tree},town:clone(dg.town),fragments:[...dg.fragments],zinState:dg.zinState,zinFloorDone:dg.zinFloorDone,gems:{...dg.gems},checkpoint:dg.checkpoint||1},
  };
 }
 // Applies a saved character (and, for an unfinished descent, the floor) to a fresh Dungeon.
-function restoreDungeon(dg,{character,depth=1,stats=null}){
+function restoreDungeon(dg,{character,depth=1,stats=null,runGold=0}){
  if(character){
   Object.assign(dg.p,{level:character.level||1,xp:character.xp||0,gold:character.gold||0});
-  dg.potions={bread:0,battery:0,...character.potions};dg.keys=character.keys||0;
+  dg.potions={bread:0,battery:0,ticket:0,lens:0,...character.potions};if(character.gems)dg.gems={...dg.gems,...character.gems};dg.checkpoint=character.checkpoint||1;dg.keys=character.keys||0;
   dg.inventory=(character.inventory||[]).map(clone);
   for(const k of Object.keys(dg.equipped))if(character.equipped&&k in character.equipped)dg.equipped[k]=character.equipped[k]?clone(character.equipped[k]):null;
   for(const c of dg.companions)if(character.trust?.[c.id]!=null)c.trust=character.trust[c.id];
   if(character.tree)dg.tree={...character.tree};if(character.town)dg.town={...dg.town,...clone(character.town)};
   dg.fragments=[...(character.fragments||[])];dg.zinState=character.zinState||null;dg.zinFloorDone=!!character.zinFloorDone;
  }
- if(stats)dg.stats={...dg.stats,...stats};
+ if(stats)dg.stats={...dg.stats,...stats};dg.runGold=runGold;
  const d=dg.derived;dg.p.courage=d.maxCourage;dg.p.battery=d.maxBattery;
  dg.enterFloor(depth);
  return dg;
@@ -2006,7 +2206,8 @@ function point(e){const r=canvas.getBoundingClientRect();return{x:(e.clientX-r.l
 canvas.addEventListener('pointerdown',e=>{lastPointer=e.pointerType;if(dg){if(!paused&&!dg.ending){e.preventDefault();canvas.focus();dview.pointerDown(e);}return;}if(!sim||paused||sim.ending)return;e.preventDefault();canvas.focus();const p=point(e),spot=(sim?.spots()||[]).find(s=>distance(s,p)<30);if(spot){if(distance(sim.p,spot)<64)sim.interact(spot.id);else sim.navigate(spot.x,spot.y,spot.id);}else sim.navigate(p.x,p.y);updateUI();});canvas.addEventListener('pointermove',e=>{if(dg){dview.pointerMove(e);return;}const p=point(e);hover=(sim?.spots()||[]).find(s=>distance(s,p)<28)?.id||null;});canvas.addEventListener('pointerleave',()=>hover=null);
 function invoke(action){if(!sim||paused||sim.ending)return;action();updateUI();canvas.focus();}
 $('interact').onclick=()=>invoke(()=>sim.interact());$('primary').onclick=()=>invoke(()=>sim.action());$('secondary').onclick=()=>invoke(()=>sim.secondary());$('place').onclick=()=>invoke(()=>sim.place());$('run').onclick=()=>{running=!running;updateUI();};
-function dialog(html){paused=true;keys.clear();resetStick();$('modalContent').innerHTML=html;if(!modal.open)modal.showModal();}
+// keepScroll: re-render the same screen (shop, forge, bag) without jumping back to the top.
+function dialog(html,keepScroll=false){paused=true;keys.clear();resetStick();const top=modal.scrollTop,wasOpen=modal.open;$('modalContent').innerHTML=html;if(!wasOpen)modal.showModal();modal.scrollTop=keepScroll&&wasOpen?top:0;}
 function close(){modal.close();paused=false;last=0;canvas.focus();}
 $('closeModal').onclick=close;modal.addEventListener('cancel',e=>{e.preventDefault();close();});
 function help(){if(dg)return dungeonHelp();dialog(`<h2>Điều khiển & phối hợp đạo cụ</h2><p><b>Trên điện thoại:</b> kéo cần trái để đi; tay phải chạm Đèn pin / Hù và nút sử dụng. Giữ Chạy để tăng tốc. Có thể vừa di chuyển vừa dùng kỹ năng.</p><p><b>Đạo cụ tác động lên ma:</b> chuông kéo ma tới nguồn âm; băng cát sét giữ ma đứng nghe; tranh khiến ma hoảng lùi; rèm làm ma mất dấu; ghế nghỉ tạo vùng an toàn. Mỗi món có thời gian hồi và dùng lặp sẽ kém hiệu quả.</p><p><b>Phòng Nghĩa Địa:</b> Xác Sống gần như không nhìn thấy nhưng nghe rất thính. Ván gỗ cót két và tiếng chạy sẽ kéo hắn tới. Nhặt đồng xu rồi nhấn Q để ném đánh lạc hướng. Đèn pin chỉ làm hắn khựng lại rồi lần theo ánh sáng; đừng bật đèn khi nấp sau áo khoác. Nhân viên có thể chui vào quan tài đứng rồi bung nắp để hù.</p><p><b>Hành lang Ma Cổ Dài:</b> cái đầu trượt trên trần và thả xuống ai đứng dưới bóng của nó. Nhấn Q để cúi người, giật dây kéo, hoặc rọi đèn lên ròng rọc để làm kẹt. Rọi vào mặt chỉ làm cô ấy thấy bạn. Cửa hậu là đường tắt tối om. Nhân viên cầm dây kéo để điều khiển cái đầu; gọi bộ đàm khi mỏi tay.</p><p>Nhân vật đi trong phòng thật. Đến gần đồ vật để sử dụng; NPC vẫn di chuyển khi bạn đứng yên.</p><div class="help-grid"><b>WASD / ↑↓←→</b><span>Di chuyển. Hoặc chạm một điểm trên sàn để tự tìm đường.</span><b>E</b><span>Tương tác với vật gần nhất. Chạm điểm sáng cũng tự đi tới vật đó.</span><b>Space</b><span>Khách: bật / tắt đèn pin. Nhân viên: tung chiêu trong tầm gần.</span><b>Q</b><span>Khách: nấp khi ở cạnh rèm. Nhân viên: kích hoạt loa gần nhất.</span><b>P</b><span>Nhân viên đặt loa tại chỗ đang đứng, tối đa 3 loa.</span><b>Shift</b><span>Chạy nhanh, tốn thể lực.</span><b>Ghế nghỉ</b><span>Tới ghế ở góc trái để hồi sức, pin và giảm sợ hãi.</span><b>J / Esc</b><span>Nhật ký / tạm dừng.</span></div><p>${sim?.role==='employee'?'Gợi ý: đặt loa, mở cửa đón khách, kích loa rồi vòng sang hướng khác để hù. Khách quen chiêu sẽ khó bị dọa hơn.':'Gợi ý: khi ma lấy đà, quay mặt rọi đèn, lùi lại hoặc nấp. Bàn chặn cả đường đi lẫn một phần tầm nhìn.'}</p><div class="dialog-actions"><button id="resume">Vào chơi</button></div>`);$('resume').onclick=close;}
@@ -2029,7 +2230,7 @@ $('touchInteract').onclick=()=>invoke(()=>sim.interact());$('touchSecondary').on
 $('touchRun').addEventListener('pointerdown',e=>{if(!sim||paused)return;e.preventDefault();e.currentTarget.setPointerCapture(e.pointerId);touchRunning=true;e.currentTarget.classList.add('active');});
 for(const type of ['pointerup','pointercancel','lostpointercapture'])$('touchRun').addEventListener(type,()=>{touchRunning=false;$('touchRun').classList.remove('active');});
 const typing=t=>!!t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName));
-window.addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey||typing(e.target))return;const k=e.key.toLowerCase();if(['arrowup','arrowdown','arrowleft','arrowright',' ','w','a','s','d','e','q','p','j','escape','shift','r','f','i','1','2','k','z'].includes(k))e.preventDefault();if(k==='escape'){if(e.repeat)return;modal.open?close():pause();return;}if(k==='j'){if(e.repeat)return;modal.open?close():journal();return;}if(dg){if(paused||dg.ending)return;keys.add(k);if(!e.repeat)dungeonKey(k);return;}if(paused||!sim||sim.ending)return;keys.add(k);if(e.repeat)return;if(k==='e')invoke(()=>sim.interact());if(k===' ')invoke(()=>sim.action());if(k==='q')invoke(()=>sim.secondary());if(k==='p')invoke(()=>sim.place());});window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));window.addEventListener('blur',()=>{keys.clear();resetStick();if((sim&&!sim.ending||dg&&!dg.ending)&&!modal.open)pause();});document.addEventListener('visibilitychange',()=>{if(document.hidden){keys.clear();resetStick();if((sim&&!sim.ending||dg&&!dg.ending)&&!modal.open)pause();}});
+window.addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey||typing(e.target))return;const k=e.key.toLowerCase();if(['arrowup','arrowdown','arrowleft','arrowright',' ','w','a','s','d','e','q','p','j','escape','shift','r','f','i','1','2','3','k','z'].includes(k))e.preventDefault();if(k==='escape'){if(e.repeat)return;modal.open?close():pause();return;}if(k==='j'){if(e.repeat)return;modal.open?close():journal();return;}if(dg){if(paused||dg.ending)return;keys.add(k);if(!e.repeat)dungeonKey(k);return;}if(paused||!sim||sim.ending)return;keys.add(k);if(e.repeat)return;if(k==='e')invoke(()=>sim.interact());if(k===' ')invoke(()=>sim.action());if(k==='q')invoke(()=>sim.secondary());if(k==='p')invoke(()=>sim.place());});window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));window.addEventListener('blur',()=>{keys.clear();resetStick();if((sim&&!sim.ending||dg&&!dg.ending)&&!modal.open)pause();});document.addEventListener('visibilitychange',()=>{if(document.hidden){keys.clear();resetStick();if((sim&&!sim.ending||dg&&!dg.ending)&&!modal.open)pause();}});
 if(document.modelContext?.registerTool){try{Promise.resolve(document.modelContext.registerTool({name:'read_simulation',description:'Read the visible RPG simulation: role, position, resources, clues, and nearby interaction.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true},execute:()=>sim?{role:sim.role,room:sim.roomId,position:{x:sim.p.x,y:sim.p.y},fear:sim.fear,stamina:sim.stamina,clues:sim.clues,phase:sim.phase,objective:sim.objective(),nearby:distance(sim.p,sim.nearest())<64?sim.nearest().id:null}: {screen:'role-selection'}})).catch(()=>{});Promise.resolve(document.modelContext.registerTool({name:'start_simulation',description:'Start a new run in a selected role from the role-selection screen.',inputSchema:{type:'object',properties:{role:{type:'string',enum:['visitor','employee']},room:{type:'string',enum:Object.keys(ROOMS)}},required:['role'],additionalProperties:false},execute:({role,room})=>{if(sim)throw Error('A run is active');if(!assetsReady||!['visitor','employee'].includes(role)||room&&!ROOMS[room])throw Error('Cannot start');launch(role,room||startRoom);return{role:sim.role,room:sim.roomId,phase:sim.phase};}})).catch(()=>{});}catch{}}
 
 // ---- Hầm Ma wiring ------------------------------------------------------------
@@ -2044,7 +2245,7 @@ function launchDungeon(){
  // Continue an unfinished descent, or start at floor 1 with the saved character, or start fresh.
  const p=saves.current();
  if(p?.dungeon)dg=restoreDungeon(new Dungeon(p.dungeon.seed),p.dungeon);
- else{dg=new Dungeon(Math.floor(Math.random()*1e5));if(p?.character)restoreDungeon(dg,{character:p.character,depth:1});dg.startDescent();}
+ else{dg=new Dungeon(Math.floor(Math.random()*1e5));if(p?.character)restoreDungeon(dg,{character:p.character,depth:p.character.checkpoint||1});dg.startDescent();}
  savedDepth=dg.depth;savedAt=dg.time;dview.attach(dg);paused=false;endShown=false;keys.clear();
  document.body.classList.add('dungeon');$('start').hidden=true;$('end').hidden=true;$('stop').hidden=true;$('place').hidden=false;$('touchPlace').hidden=false;
  for(const [id,html] of Object.entries(DUNGEON_HTML))$(id).innerHTML=html;for(const id of DUNGEON_ONLY)$(id).hidden=false;
@@ -2059,7 +2260,7 @@ function leaveDungeon(){
 }
 function dungeonAct(action){if(!dg||paused||dg.ending)return;action();updateDungeonUI();canvas.focus();}
 function useStuff(){dungeonAct(()=>{if(dg.interact()==='shop')shop();});}
-const DUNGEON_KEYS={' ':()=>dg.cast('flash',aim(160)),q:()=>dg.cast('candy',aim(380)),r:()=>dg.cast('bell'),f:()=>dg.cast('spotlight',aim(260)),shift:()=>dg.cast('dash',dview.mouse&&lastPointer==='mouse'?dview.mouse:null),'1':()=>dg.usePotion('bread'),'2':()=>dg.usePotion('battery'),i:()=>bag(),k:()=>tree(),z:()=>dg.callZin()};
+const DUNGEON_KEYS={' ':()=>dg.cast('flash',aim(160)),q:()=>dg.cast('candy',aim(380)),r:()=>dg.cast('bell'),f:()=>dg.cast('spotlight',aim(260)),shift:()=>dg.cast('dash',dview.mouse&&lastPointer==='mouse'?dview.mouse:null),'1':()=>dg.usePotion('bread'),'2':()=>dg.usePotion('battery'),'3':()=>dg.usePotion('ticket'),i:()=>bag(),k:()=>tree(),z:()=>dg.callZin()};
 function dungeonKey(k){if(k==='e')return useStuff();const f=DUNGEON_KEYS[k];if(f)dungeonAct(f);}
 const DUNGEON_BUTTONS={zin:()=>dungeonAct(DUNGEON_KEYS.z),touchZin:()=>dungeonAct(DUNGEON_KEYS.z),interact:useStuff,touchInteract:useStuff,primary:()=>dungeonAct(DUNGEON_KEYS[' ']),touchPrimary:()=>dungeonAct(DUNGEON_KEYS[' ']),secondary:()=>dungeonAct(DUNGEON_KEYS.q),touchSecondary:()=>dungeonAct(DUNGEON_KEYS.q),place:()=>dungeonAct(DUNGEON_KEYS.r),touchPlace:()=>dungeonAct(DUNGEON_KEYS.r),run:()=>dungeonAct(DUNGEON_KEYS.shift),ult:()=>dungeonAct(DUNGEON_KEYS.f),touchUlt:()=>dungeonAct(DUNGEON_KEYS.f),bread:()=>dungeonAct(DUNGEON_KEYS['1']),touchBread:()=>dungeonAct(DUNGEON_KEYS['1']),batt:()=>dungeonAct(DUNGEON_KEYS['2']),touchBattery:()=>dungeonAct(DUNGEON_KEYS['2'])};
 for(const [id,fn] of Object.entries(DUNGEON_BUTTONS)){const classic=$(id).onclick;$(id).onclick=e=>dg?fn():classic?.(e);}
@@ -2086,15 +2287,25 @@ function updateDungeonUI(){
  if(dg.ending&&!endShown)showDungeonEnding();
 }
 function wire(map){for(const [attr,fn] of Object.entries(map))$('modalContent').querySelectorAll(`[data-${attr}]`).forEach(b=>b.onclick=()=>fn(b.dataset[attr]));const r=$('resume');if(r)r.onclick=close;}
-function bag(){if(!dg)return;dialog(bagHtml(dg));wire({equip:i=>{dg.equip(dg.inventory[+i]);bag();},drop:i=>{dg.dropItem(dg.inventory[+i]);bag();},open:()=>tree()});}
+let bagSlot=null;
+function bag(sel=bagSlot,keep=true){if(!dg)return;bagSlot=sel||null;dialog(bagHtml(dg,{sel:bagSlot}),keep);const pick=key=>{const [w,g]=key.split(':');return[w,g];};
+ wire({slot:k=>bag(k||null,false),equip:i=>{dg.equip(dg.inventory[+i]);bag();},drop:i=>{dg.dropItem(dg.inventory[+i]);bag();},open:()=>tree(),
+  lens:i=>{const it=dg.inventory[+i];if(it&&dg.potions.lens>0&&identifyItem(null,it,{free:true})===null)dg.potions.lens--;bag();},
+  gem:key=>{const [i,g]=pick(key);socketGem(dg,dg.inventory[+i],g);bag();},gemeq:key=>{const [k,g]=pick(key);socketGem(dg,dg.equipped[k],g);dg.p.battery=Math.min(dg.p.battery,dg.derived.maxBattery);bag();}});}
+// Forge keys look like 'e:torch' (equipped) or 'i:3' (bag index).
+const forgeItem=(key,equipped,inventory)=>{const [w,k]=key.split(':');return w==='e'?equipped[k]:inventory[+k];};
+const FORGE_MSG={up:it=>`Thành công! ${it.name} lên +${it.plus}.`,fail:it=>`Hụt rồi. ${it.name} vẫn +${it.plus||0}, mất xu.`,down:it=>`Hỏng! ${it.name} tụt về +${it.plus}.`,gold:()=>'Không đủ xu.',max:()=>'Đã tối đa +10.'};
 function tree(){if(!dg)return;dialog(treeHtml({level:dg.p.level,tree:dg.tree}));wire({learn:id=>{dg.learnSkill(id);tree();}});}
-function shop(){if(!dg)return;dialog(shopHtml(dg));wire({buy:k=>{dg.buy(k);shop();},sell:i=>{dg.sell(dg.inventory[+i]);shop();},respec:()=>{dg.respec();shop();}});}
-function dungeonHelp(){dialog(`<h2>Hầm Ma: cách chơi</h2><p>Diễn viên trong hầm sẽ hù bạn. Hạ màn họ bằng cách làm họ mất bình tĩnh: khi thanh bình tĩnh về 0, họ phì cười, rơi đồ rồi rời sân khấu. Hết can đảm thì Mr. D dắt bạn về đầu tầng; đồ vẫn còn, chỉ rơi ít xu.</p><div class="help-grid"><b>Chuột trái</b><span>Đi tới chỗ bấm; giữ để đi liên tục. Bấm diễn viên để tự đánh; bấm tên món đồ để nhặt.</span><b>Chuột phải / Q</b><span>Ném kẹo về phía con trỏ (8 pin).</span><b>Space</b><span>Rọi đèn: đánh hình nón phía trước, không tốn pin.</span><b>R</b><span>Chuông đồng (cấp 3): làm choáng xung quanh.</span><b>F</b><span>Đèn sân khấu (cấp 5): chùm sáng lớn.</span><b>Shift</b><span>Lướt né: không bị hù trong lúc lướt.</span><b>E</b><span>Nhặt đồ, xuống cầu thang, mua bán ở quầy Mr. D.</span><b>1 / 2</b><span>Bánh bao (hồi can đảm) / pin AA (hồi pin).</span><b>I</b><span>Túi đồ: trang bị đèn, áo, bùa, giày.</span></div><p><b>Con dấu và chìa khóa:</b> cầu thang mỗi tầng bị niêm phong cho tới khi bạn nhặt con dấu tầng (cột sáng hồng). Chìa khóa đồng (cột sáng vàng) thì tùy chọn, nhưng mỗi tầng thứ ba phòng trùm bị khóa và chỉ chìa khóa đồng mở được. Tới tầng trùm mà chưa có chìa thì phải giành chiếc chìa dự phòng ở phòng đông diễn viên nhất.</p><p><b>Cây kỹ năng (K):</b> mỗi cấp được 1 điểm, chia vào nhánh Đèn hoặc Bạn bè. <b>Zin (Z):</b> nhặt mảnh vé 000 đầu tiên là gọi được Zin một lần mỗi tầng; đủ ba mảnh thì cầu thang dẫn tới tầng của Khách Số 0. <b>Quầy Mr. D</b> giữa hai chuyến bán nâng cấp, trang phục và đồ chơi cho Bơ. Cần điều khiển mờ ở góc trái luôn sẵn; chạm sàn cũng đi được. <b>Tự đánh</b> (đổi trong Tạm nghỉ): đèn tự rọi khi diễn viên tới gần.</p><p><b>Na và Bơ</b> đi cùng bạn. Na ném kẹo và cổ vũ khi bạn sợ; Bơ rọi điện thoại làm diễn viên khựng lại và đôi khi đánh hơi ra con dấu hay chìa khóa. Đi cùng họ qua các trận thì họ tin bạn hơn và giúp mạnh hơn; bỏ họ lại phía sau thì ngược lại. Hết can đảm, họ ra ngoài nghỉ một lúc rồi quay lại.</p><p>Vòng đỏ là đòn sắp tới: bước ra khỏi vòng hoặc lướt. Mỗi tầng thứ ba có trùm giữ cầu thang. Trên điện thoại, nút đánh tự nhắm vào diễn viên gần nhất.</p><div class="dialog-actions"><button id="resume">Vào hầm</button></div>`);$('resume').onclick=close;}
+function shop(msg='',keep=true){if(!dg)return;dialog(shopHtml(dg,{msg}),keep);wire({buy:k=>{dg.buy(k);shop();},sell:i=>{dg.sell(dg.inventory[+i]);shop();},respec:()=>{dg.respec();shop();},junk:()=>{const n=dg.sellJunk();shop(n?`Đã bán ${n} món Thường.`:'');},
+ up:key=>{const it=forgeItem(key,dg.equipped,dg.inventory),r=upgradeItem(dg.p,it,Math.random());shop({key,text:FORGE_MSG[r]?.(it)||''});},
+ ident:key=>{const it=forgeItem(key,dg.equipped,dg.inventory);shop({key,text:identifyItem(dg.p,it)===null?`Mr. D soi kỹ: đó là ${it.name} (${it.rarityName})!`:'Không đủ xu.'});}});}
+function dungeonHelp(){dialog(`<h2>Hầm Ma: cách chơi</h2><p>Diễn viên trong hầm sẽ hù bạn. Hạ màn họ bằng cách làm họ mất bình tĩnh: khi thanh bình tĩnh về 0, họ phì cười, rơi đồ rồi rời sân khấu. Hết can đảm thì Mr. D cõng bạn lên: đồ đang mặc vẫn còn, nhưng đồ và xu nhặt trong chuyến mà chưa mặc sẽ mất. Muốn giữ thì về bằng <b>Vé về</b> (phím 3) hoặc thang lên ở trạm nghỉ của Mr. D (tầng 1, 4, 7…). Đồ Hiếm trở lên rơi ra chưa giám định: dùng Kính lúp hoặc nhờ Mr. D. Lò rèn của Mr. D nâng đồ tới +10 và gắn ngọc.</p><div class="help-grid"><b>Chuột trái</b><span>Đi tới chỗ bấm; giữ để đi liên tục. Bấm diễn viên để tự đánh; bấm tên món đồ để nhặt.</span><b>Chuột phải / Q</b><span>Ném kẹo về phía con trỏ (8 pin).</span><b>Space</b><span>Rọi đèn: đánh hình nón phía trước, không tốn pin.</span><b>R</b><span>Chuông đồng (cấp 3): làm choáng xung quanh.</span><b>F</b><span>Đèn sân khấu (cấp 5): chùm sáng lớn.</span><b>Shift</b><span>Lướt né: không bị hù trong lúc lướt.</span><b>E</b><span>Nhặt đồ, xuống cầu thang, mua bán ở quầy Mr. D.</span><b>1 / 2</b><span>Bánh bao (hồi can đảm) / pin AA (hồi pin).</span><b>I</b><span>Túi đồ: trang bị đèn, áo, bùa, giày.</span></div><p><b>Con dấu và chìa khóa:</b> cầu thang mỗi tầng bị niêm phong cho tới khi bạn nhặt con dấu tầng (cột sáng hồng). Chìa khóa đồng (cột sáng vàng) thì tùy chọn, nhưng mỗi tầng thứ ba phòng trùm bị khóa và chỉ chìa khóa đồng mở được. Tới tầng trùm mà chưa có chìa thì phải giành chiếc chìa dự phòng ở phòng đông diễn viên nhất.</p><p><b>Cây kỹ năng (K):</b> mỗi cấp được 1 điểm, chia vào nhánh Đèn hoặc Bạn bè. <b>Zin (Z):</b> nhặt mảnh vé 000 đầu tiên là gọi được Zin một lần mỗi tầng; đủ ba mảnh thì cầu thang dẫn tới tầng của Khách Số 0. <b>Quầy Mr. D</b> giữa hai chuyến bán nâng cấp, trang phục và đồ chơi cho Bơ. Cần điều khiển mờ ở góc trái luôn sẵn; chạm sàn cũng đi được. <b>Tự đánh</b> (đổi trong Tạm nghỉ): đèn tự rọi khi diễn viên tới gần.</p><p><b>Na và Bơ</b> đi cùng bạn. Na ném kẹo và cổ vũ khi bạn sợ; Bơ rọi điện thoại làm diễn viên khựng lại và đôi khi đánh hơi ra con dấu hay chìa khóa. Đi cùng họ qua các trận thì họ tin bạn hơn và giúp mạnh hơn; bỏ họ lại phía sau thì ngược lại. Hết can đảm, họ ra ngoài nghỉ một lúc rồi quay lại.</p><p>Vòng đỏ là đòn sắp tới: bước ra khỏi vòng hoặc lướt. Mỗi tầng thứ ba có trùm giữ cầu thang. Trên điện thoại, nút đánh tự nhắm vào diễn viên gần nhất.</p><div class="dialog-actions"><button id="resume">Vào hầm</button></div>`);$('resume').onclick=close;}
 function showDungeonEnding(){
  endShown=true;saves.saveDungeon(snapshotDungeon(dg),{finished:true});if(dg.ending==='ticket'||dg.ending==='new')saves.recordEnding(dg.ending);const best=Math.max(dg.stats.deepest,saves.current()?.best.depth||0);
  const s=dg.stats,trust=Math.min(...dg.companions.map(c=>c.trust)),friends=trust>=70?' Na và Bơ đòi xuống hầm cùng bạn lần nữa.':trust<30?' Na khoanh tay: “Lần sau đừng bỏ tụi tui lại nữa.”':'',text=(s.bosses?`Mr. D đếm số trùm bạn làm phì cười: ${s.bosses}. “Mai có ca mới, nhớ ghé.”`:'Na đợi sẵn ở cửa hầm với lon nước. “Lần sau xuống sâu hơn nha.”')+friends;
- const zinEnd={ticket:['Xé vé','Zin nhìn dấu mộc cuối cùng rất lâu. “Lâu quá…” Rồi cậu ấy mỉm cười và tan vào ánh đèn. Hôm sau, góc vé 000 có thêm hình chiếc ô.'],new:['Ma mới','Mr. D ghi tên Zin vào bảng phân ca: “Đứa này khỏi cần phát đồng phục.” Từ giờ, cứ gọi là Zin tới.']}[dg.ending];
- $('end').innerHTML=`<div class="endcard"><span class="eyebrow">HẦM MA · KẾT CHUYẾN</span><h2>${zinEnd?zinEnd[0]:'Lên khỏi hầm'}</h2><p>${zinEnd?zinEnd[1]:text}</p><div class="endstats"><span>Sâu nhất tầng ${s.deepest}</span><span>Cấp ${dg.p.level}</span><span>${s.defeated} lần hạ màn</span><span>${dg.p.gold} xu</span></div><p><small>Kỷ lục của ${esc(saves.current()?.name||'bạn')}: tầng ${best} · nhân vật cấp ${dg.p.level} được lưu lại cho lần sau</small></p><div class="endactions"><button id="again">Xuống hầm lần nữa</button><button id="townEnd">Ghé quầy Mr. D</button><button id="other">Về màn hình chính</button></div></div>`;
+ const lost=dg.lost,faint=dg.ending==='faint'?['Ngất xỉu',`Mr. D cõng bạn lên khỏi hầm. Đồ đang mặc, cấp độ và xu mang theo từ đầu vẫn còn.${lost.items.length||lost.gold?` Bỏ lại dưới hầm: ${[lost.items.length?`${lost.items.length} món (${lost.items.slice(0,4).join(', ')}${lost.items.length>4?'…':''})`:'',lost.gold?`${lost.gold} xu`:''].filter(Boolean).join(' và ')}.`:' May mà chưa nhặt được gì để mất.'} Lần sau mang theo Vé về.`]:null;
+ const zinEnd=faint||({ticket:['Xé vé','Zin nhìn dấu mộc cuối cùng rất lâu. “Lâu quá…” Rồi cậu ấy mỉm cười và tan vào ánh đèn. Hôm sau, góc vé 000 có thêm hình chiếc ô.'],new:['Ma mới','Mr. D ghi tên Zin vào bảng phân ca: “Đứa này khỏi cần phát đồng phục.” Từ giờ, cứ gọi là Zin tới.']})[dg.ending];
+ $('end').innerHTML=`<div class="endcard"><span class="eyebrow">HẦM MA · ${faint?'HẾT CAN ĐẢM':'KẾT CHUYẾN'}</span><h2>${zinEnd?zinEnd[0]:'Lên khỏi hầm'}</h2><p>${zinEnd?zinEnd[1]:text}</p><div class="endstats"><span>Sâu nhất tầng ${s.deepest}</span><span>Cấp ${dg.p.level}</span><span>${s.defeated} lần hạ màn</span><span>${dg.p.gold} xu</span></div><p><small>Kỷ lục của ${esc(saves.current()?.name||'bạn')}: tầng ${best} · nhân vật cấp ${dg.p.level} được lưu lại cho lần sau</small></p><div class="endactions"><button id="again">Xuống hầm lần nữa</button><button id="townEnd">Ghé quầy Mr. D</button><button id="other">Về màn hình chính</button></div></div>`;
  $('end').hidden=false;$('again').onclick=()=>launchDungeon();$('other').onclick=()=>home();$('townEnd').onclick=()=>town();
 }
 window.addEventListener('pointerdown',e=>{lastPointer=e.pointerType;},true);
@@ -2108,7 +2319,7 @@ function renderProfile(){
  const ch=p.character,run=p.dungeon;
  $('playerLabel').textContent=p.name;
  $('saveInfo').textContent=[`Lưu trên ${DEVICE_NAME[saves.device]||'thiết bị này'}`,ch?`Hầm Ma: cấp ${ch.level}, kỷ lục tầng ${p.best.depth||1}`:'Hầm Ma: chưa có nhân vật',`${p.endings.length} kết cục đã mở`].join(' · ')+(saves.persistent?'':' · Trình duyệt này không cho lưu (chế độ ẩn danh?), tiến trình sẽ mất khi đóng trang.');
- $('dungeonSub').textContent=run?`Chơi tiếp: tầng ${run.depth} · cấp ${run.character.level}`:ch?`Cấp ${ch.level} · xuống lại từ tầng 1`:'“Để xem có gì mà sợ.”';
+ $('dungeonSub').textContent=run?`Chơi tiếp: tầng ${run.depth} · cấp ${run.character.level}`:ch?`Cấp ${ch.level} · xuống từ ${(ch.checkpoint||1)>1?`trạm nghỉ tầng ${ch.checkpoint}`:'tầng 1'}`:'“Để xem có gì mà sợ.”';
  $('newCharacter').hidden=!ch;$('townBtn').hidden=!ch||!!run;
 }
 $('profileForm').addEventListener('submit',e=>{e.preventDefault();if(saves.select($('playerName').value)){$('playerName').value='';renderProfile();}});
@@ -2123,16 +2334,16 @@ function showDungeonHud(on){
  $('dhud').hidden=!on;const joy=$('joystick');
  if(on){$('dStick').appendChild(joy);if(!hudIconsSet&&dview){hudIconsSet=true;const url=n=>`url(${dview.icons[n].toDataURL()})`;
   for(const b of $('dhud').querySelectorAll('[data-skill]'))b.style.backgroundImage=url(b.dataset.skill);
-  for(const b of $('dhud').querySelectorAll('[data-act]'))b.style.backgroundImage=url(b.dataset.act);$('dPause').style.backgroundImage=url('pause');}}
+  for(const b of $('dhud').querySelectorAll('[data-act]'))b.style.backgroundImage=url(b.dataset.act==='ticket'?'home':b.dataset.act);$('dPause').style.backgroundImage=url('pause');}}
  else document.querySelector('.joystick-area').prepend(joy);
 }
-const HUD_SKILL_KEY={flash:' ',candy:'q',bell:'r',spotlight:'f',dash:'shift'},HUD_ACT_KEY={bread:'1',battery:'2',zin:'z',tree:'k',bag:'i'};
+const HUD_SKILL_KEY={flash:' ',candy:'q',bell:'r',spotlight:'f',dash:'shift'},HUD_ACT_KEY={bread:'1',battery:'2',ticket:'3',zin:'z',tree:'k',bag:'i'};
 for(const b of $('dhud').querySelectorAll('[data-skill]'))b.onclick=()=>dungeonAct(DUNGEON_KEYS[HUD_SKILL_KEY[b.dataset.skill]]);
 for(const b of $('dhud').querySelectorAll('[data-act]'))b.onclick=()=>dungeonAct(DUNGEON_KEYS[HUD_ACT_KEY[b.dataset.act]]);
 $('dUse').onclick=()=>useStuff();$('dPause').onclick=()=>pause();
 function updateHudButtons(){
  for(const b of $('dhud').querySelectorAll('[data-skill]')){const k=b.dataset.skill,s=SKILLS[k],locked=dg.p.level<s.level;b.disabled=locked||dg.p.battery<s.cost;b.querySelector('i').style.setProperty('--cd',(dg.cooldowns[k]/Math.max(.01,s.cd))*360+'deg');const tag=b.querySelector('b');if(tag)tag.textContent=locked?`C${s.level}`:'';}
- $('dBread').textContent=dg.potions.bread;$('dBattery').textContent=dg.potions.battery;$('dPoints').textContent=dg.skillPoints?`+${dg.skillPoints}`:'';
+ $('dBread').textContent=dg.potions.bread;$('dBattery').textContent=dg.potions.battery;$('dTicket').textContent=dg.potions.ticket||0;$('dPoints').textContent=dg.skillPoints?`+${dg.skillPoints}`:'';
  const zb=$('dhud').querySelector('[data-act=zin]');zb.hidden=!(dg.fragments.length&&dg.zinState!=='gone');zb.disabled=!dg.canCallZin;
  const n=dg.nearby();$('dUse').hidden=!n||!!dg.ending;if(n)$('dUse').textContent=n.label;
 }
@@ -2143,12 +2354,16 @@ function autoFight(){let v=null;try{v=localStorage.getItem(CONTROLS_KEY);}catch{
 function setAutoFight(on){try{localStorage.setItem(CONTROLS_KEY,on?'auto':'manual');}catch{}applyControls();}
 function applyControls(){if(dg)dg.autoAttack=autoFight();resetStick();}
 // ---- Mr. D's town hub, between descents -------------------------------------------
+let townMsg='',townKeep=false;
 function town(){
  const p=saves.current();if(!p?.character){dialog('<h2>Quầy Mr. D</h2><p>Xuống hầm một chuyến để có nhân vật và xu trước đã.</p><div class="dialog-actions"><button id="resume">Đóng</button></div>');$('resume').onclick=close;return;}
  if(p.dungeon){dialog(`<h2>Quầy Mr. D</h2><p>${esc(p.name)} còn một chuyến dở ở tầng ${p.dungeon.depth}. Rời hầm bằng thang lên rồi hãy ghé quầy.</p><div class="dialog-actions"><button id="resume">Đóng</button></div>`);$('resume').onclick=close;return;}
- const ch=p.character;ch.town=ch.town||emptyTown();
- dialog(townHtml(ch,p.name));
- wire({town:id=>{buyTown(ch,id);saves.update(()=>{});town();},respec:()=>{if((ch.gold||0)>=RESPEC_COST&&Object.keys(ch.tree||{}).length){ch.gold-=RESPEC_COST;ch.tree={};saves.update(()=>{});}town();}});
+ const ch=p.character;ch.town=ch.town||emptyTown();ch.potions=ch.potions||{};ch.gems=ch.gems||emptyGems();ch.inventory=ch.inventory||[];ch.equipped=ch.equipped||{};
+ dialog(townHtml(ch,p.name,{msg:townMsg}),townKeep);townMsg='';townKeep=false;const again=m=>{townMsg=m||'';townKeep=true;saves.update(()=>{});town();};
+ wire({tbuy:k=>{const s=SUPPLIES[k];if((ch.gold||0)>=s.price){ch.gold-=s.price;ch.potions[k]=(ch.potions[k]||0)+1;}again();},
+  tup:key=>{const it=forgeItem(key,ch.equipped,ch.inventory),r=upgradeItem(ch,it,Math.random());again({key,text:FORGE_MSG[r]?.(it)||''});},
+  tident:key=>{const it=forgeItem(key,ch.equipped,ch.inventory);again({key,text:identifyItem(ch,it)===null?`Mr. D soi kỹ: đó là ${it.name} (${it.rarityName})!`:'Không đủ xu.'});},
+  town:id=>{buyTown(ch,id);saves.update(()=>{});town();},respec:()=>{if((ch.gold||0)>=RESPEC_COST&&Object.keys(ch.tree||{}).length){ch.gold-=RESPEC_COST;ch.tree={};saves.update(()=>{});}town();}});
  const r=$('resume');if(r)r.onclick=()=>{close();renderProfile();};
 }
 $('townBtn').onclick=()=>town();

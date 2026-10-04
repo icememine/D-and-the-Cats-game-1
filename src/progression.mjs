@@ -81,3 +81,52 @@ export const hasGadget=(town,id)=>!!town?.gadgets?.includes(id);
 // ---- Zin (Khách Số 0): one "Vé 000" fragment per theme. Three open Zin's floor.
 export const FRAGMENT_CHANCE={boss:.5,elite:.1};
 export const ZIN_DURATION=12;
+
+// ---- Mr. D's forge: +1 … +10 upgrades. Each + raises the item's base stat by 12%.
+// +1 to +3 always work; after that the odds fall, and a failure from +5 up drops a level.
+export const MAX_PLUS=10;
+export const upgradeChance=plus=>plus<3?1:[.9,.8,.7,.6,.5,.4,.3][plus-3]??0;
+export const upgradeCost=item=>Math.round((15+item.ilvl*6)*(1+(item.plus||0)*.6));
+export const plusBase=item=>Object.fromEntries(Object.entries(item.base).map(([k,v])=>[k,Math.round(v*(1+.12*(item.plus||0)))]));
+function rebase(item,before){const after=plusBase(item);for(const k of Object.keys(after))item.stats[k]=(item.stats[k]||0)-before[k]+after[k];}
+// `purse` holds the coins ({gold}); `roll` is a number in [0,1). Returns 'up', 'fail', 'down' or a reason.
+export function upgradeItem(purse,item,roll){
+ const plus=item.plus||0;if(plus>=MAX_PLUS)return'max';if(item.unid)return'unid';
+ const cost=upgradeCost(item);if((purse.gold||0)<cost)return'gold';purse.gold-=cost;
+ const before=plusBase(item);
+ if(roll<upgradeChance(plus)){item.plus=plus+1;rebase(item,before);return'up';}
+ if(plus>=5){item.plus=plus-1;rebase(item,before);return'down';}
+ return'fail';
+}
+
+// ---- Gems: dropped by performers, set into Hiếm (1 socket), Huyền thoại and Bộ items (2). Permanent.
+export const GEMS={
+ ruby:{name:'Hồng ngọc',stat:'dmgPct',value:6,text:'+6% sát thương',color:'#e0445a'},
+ sapphire:{name:'Lam ngọc',stat:'battery',value:15,text:'+15 pin tối đa',color:'#4a86e8'},
+ emerald:{name:'Lục bảo',stat:'armor',value:8,text:'+8 giáp',color:'#3fbf6a'},
+ topaz:{name:'Hoàng ngọc',stat:'crit',value:3,text:'+3% chí mạng',color:'#f2c230'},
+};
+export const emptyGems=()=>Object.fromEntries(Object.keys(GEMS).map(k=>[k,0]));
+export const socketsFor=item=>({rare:1,legendary:2,set:2}[item.rarity]||0);
+// `pouch` holds the gems ({gems:{ruby:n,…}}). Returns null or a reason.
+export function socketGem(pouch,item,gem){
+ if(!GEMS[gem])return'unknown';if(item.unid)return'unid';
+ item.gems=item.gems||[];if(item.gems.length>=socketsFor(item))return'full';
+ if(!pouch.gems?.[gem])return'none';pouch.gems[gem]--;item.gems.push(gem);
+ const g=GEMS[gem];item.stats[g.stat]=(item.stats[g.stat]||0)+g.value;return null;
+}
+
+// ---- Unidentified items: Hiếm, Huyền thoại and Bộ drops hide their name and affixes until
+// identified, by Mr. D (coins) or with a Kính lúp. They can't be worn before that.
+export const identifyCost=item=>10+item.ilvl*4;
+export function identifyItem(purse,item,{free=false}={}){
+ if(!item.unid)return'known';
+ if(!free){const cost=identifyCost(item);if((purse.gold||0)<cost)return'gold';purse.gold-=cost;}
+ item.unid=false;return null;
+}
+
+// ---- Consumables Mr. D sells, in the dungeon and in town.
+export const SUPPLIES={bread:{name:'Bánh bao',price:20,text:'+45% can đảm'},battery:{name:'Pin AA',price:20,text:'+60 pin'},ticket:{name:'Vé về',price:60,text:'Về quầy Mr. D an toàn, giữ hết đồ'},lens:{name:'Kính lúp',price:25,text:'Giám định một món đồ'}};
+// Rest stops: Mr. D's floors (1, 4, 7, …). The ladder up only works there, and a new descent can start
+// from the deepest one reached.
+export const isRestStop=depth=>depth%3===1;

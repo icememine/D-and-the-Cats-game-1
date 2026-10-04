@@ -352,11 +352,11 @@ const CAT={
  bo:{base:'#f2eee6',shade:'#d8d2c6',stripe:null,belly:'#ffffff',patches:[['#e8873a',[[5,3,6,6],[16,17,6,5],[21,20,4,4]]],['#2b2626',[[16,3,7,5],[7,19,5,5],[23,23,3,3]]]]},
  na:{base:'#8d8270',shade:'#6d6354',stripe:'#4a4237',belly:'#c9bfae'},
 };
-export function paintCat(kind){
- const c=CAT[kind];return sprite(28,31,r=>{
+export function paintCat(kind,frame=0){
+ const c=CAT[kind],k=frame?(frame-1)%4:-1,liftA=k===0?2:0,liftB=k===2?2:0;return sprite(28,31,r=>{
   r(22,16,4,3,c.shade);r(24,13,3,4,c.shade);r(21,19,3,8,c.base);
   r(6,15,16,13,c.base);r(9,18,10,9,c.belly);r(19,16,3,11,c.shade);
-  r(8,27,5,3,c.belly);r(15,27,5,3,c.belly);
+  r(8,27,5,3-liftA,c.belly);r(15,27,5,3-liftB,c.belly);r(4,27,4,3-liftB,c.base);r(19,27,4,3-liftA,c.shade);
   r(4,4,20,12,c.base);r(5,3,18,2,c.base);r(4,0,4,5,c.base);r(20,0,4,5,c.base);r(5,1,2,3,'#f3a3b5');r(21,1,2,3,'#f3a3b5');r(21,4,3,11,c.shade);
   if(c.stripe){r(10,4,2,3,c.stripe);r(13,4,2,4,c.stripe);r(16,4,2,3,c.stripe);r(6,17,3,2,c.stripe);r(19,19,3,2,c.stripe);r(6,22,3,2,c.stripe);r(23,13,2,2,c.stripe);}
   for(const [col,boxes] of c.patches||[])for(const b of boxes)r(...b,col);
@@ -365,6 +365,51 @@ export function paintCat(kind){
   r(2,10,3,1,'#f2eee6');r(23,10,3,1,'#f2eee6');
   if(kind==='bo'){r(4,0,20,3,'#2e5fa8');r(3,3,22,2,'#2e5fa8');r(22,4,4,1,'#2e5fa8');r(7,7,5,5,'#1a1418');r(16,7,5,5,'#1a1418');r(8,8,3,3,'#cfe3ff');r(17,8,3,3,'#cfe3ff');r(12,9,4,1,'#1a1418');r(9,9,1,1,'#1a1418');r(18,9,1,1,'#1a1418');}
   if(kind==='na'){r(19,1,3,3,'#f07aa0');r(23,1,3,3,'#f07aa0');r(22,2,1,1,'#c94a76');}
+ });
+}
+
+// ---- D, the hero of Hầm Ma, built from layers so worn gear shows on him.
+// look: {hat,coat,torch,bag:{style,tint:[main,shade]}, shoes,charm,badge:colour, cape:bool}; any part may be missing.
+// frame 0 is standing; 1-4 are the walk cycle (legs step, arms swing, body bobs).
+export const GEAR_TINT={common:['#9a9488','#77716a'],magic:['#4a86d8','#2f62a8'],rare:['#efc23a','#c39a22'],legendary:['#f0843a','#c2601f'],set:['#56b866','#3a8a48']};
+const HERO={skin:'#f2c9a0',skinShade:'#d9a77c',hair:'#1c1a2e',hairHi:'#3d3868',streak:'#d9862e',eye:'#2a1a14',tee:'#2a2c55',teeShade:'#1d1e3d',pants:'#25253d',pantsShade:'#1a1a2c',sole:'#f4f1e6'};
+export function paintHero(look={},frame=0){
+ const k=frame?(frame-1)%4:-1,liftL=k===0?3:k===1||k===3?1:0,liftR=k===2?3:k===1||k===3?1:0,bob=k===0||k===2?-1:0,swing=k===0?1:k===2?-1:0,H=HERO;
+ return sprite(32,58,r=>{
+  const R=(x,y,w,h,c)=>r(x,y+bob+1,w,h,c);
+  const {hat,coat,torch,bag,cape}=look,cm=coat?.tint[0],cs=coat?.tint[1];
+  if(cape){R(7,20,18,25,'#a8323e');R(7,43,18,2,'#7a2430');}
+  if(bag&&bag.style===0){R(5,21,22,14,bag.tint[1]);R(5,21,22,2,bag.tint[0]);}
+  if(coat&&coat.style===1)R(8,9,16,11,cs);
+  if(coat&&coat.style===2)R(9,14,14,6,cs);
+  // Legs and shoes: the lifted leg is shorter, so the feet step.
+  const shoe=look.shoes||'#c23b3b';
+  for(const [x0,lift] of [[10,liftL],[17,liftR]]){const x=x0+(lift===3?(x0<16?-1:1):0);r(x,36,6,15-lift,H.pants);r(x+4,36,2,15-lift,H.pantsShade);r(x-1,51-lift,7,3,shoe);r(x-1,54-lift,7,1,H.sole);r(x,51-lift,2,1,H.sole);}
+  R(9,20,14,15,H.tee);R(19,20,4,15,H.teeShade);
+  if(coat){const long=coat.style===1;R(8,20,16,long?19:16,cm);R(20,20,4,long?19:16,cs);
+   if(coat.style===0){R(14,21,4,14,H.tee);R(10,19,12,2,cs);R(8,34,16,2,cs);}
+   else if(coat.style===1){R(15,21,1,17,cs);R(8,37,16,2,cs);}
+   else{R(11,29,10,4,cs);R(13,21,1,4,H.sole);R(18,21,1,4,H.sole);R(8,34,16,2,cs);}}
+  // Arms swing opposite to each other.
+  for(const [x,dy,shade] of [[5,swing,false],[24,-swing,true]]){
+   if(coat){R(x,20+dy,3,12,shade?cs:cm);}else{R(x,20+dy,3,5,shade?H.teeShade:H.tee);R(x,25+dy,3,7,shade?H.skinShade:H.skin);}
+   R(x,32+dy,3,3,shade?H.skinShade:H.skin);}
+  if(torch&&torch.style===0){R(26,31-swing,5,3,torch.tint[1]);R(26,31-swing,5,1,torch.tint[0]);R(30,30-swing,2,5,'#fff3c4');}
+  if(torch&&torch.style===2){R(26,35-swing,1,2,'#b08a4a');R(24,37-swing,5,6,torch.tint[0]);R(25,38-swing,3,4,'#fff3c4');}
+  if(bag&&bag.style===0){R(10,20,2,13,bag.tint[1]);R(20,20,2,13,bag.tint[1]);}
+  if(bag&&bag.style===1){for(let i=0;i<12;i++)R(9+i,20+i,2,1,bag.tint[1]);R(19,30,6,5,bag.tint[0]);R(19,30,6,1,bag.tint[1]);}
+  if(bag&&bag.style===2){R(23,21,1,9,bag.tint[1]);R(22,29,6,7,bag.tint[0]);R(22,29,6,1,bag.tint[1]);}
+  R(14,18,4,2,H.skinShade);
+  if(look.charm){R(12,20,8,1,'#b08a4a');R(15,21,2,2,look.charm);}
+  if(look.badge){R(18,24,3,3,look.badge);R(19,25,1,1,'#fff');}
+  R(9,5,14,13,H.skin);R(20,6,3,11,H.skinShade);R(8,10,1,3,H.skin);R(23,10,1,3,H.skinShade);
+  R(12,11,2,3,H.eye);R(18,11,2,3,H.eye);R(12,11,1,1,'#fff');R(18,11,1,1,'#fff');R(15,15,2,1,'#b5655a');R(10,14,2,1,'#f3a3a0');R(20,14,2,1,'#f3a3a0');
+  R(8,2,16,6,H.hair);R(7,4,2,8,H.hair);R(23,4,2,8,H.hair);R(10,0,3,3,H.hair);R(15,0,3,2,H.hair);R(20,1,3,3,H.hair);R(11,7,3,2,H.hair);R(17,7,4,2,H.hair);R(12,2,4,1,H.hairHi);R(19,2,3,1,H.streak);
+  if(torch&&torch.style===1){R(8,8,16,1,'#3a4a5a');R(14,6,4,3,torch.tint[0]);R(15,7,2,1,'#fff3c4');}
+  if(hat){const [m,sd]=hat.tint;
+   if(hat.style===0){R(8,1,16,6,m);R(8,6,16,1,sd);R(21,6,7,2,sd);R(15,0,2,1,sd);}
+   else if(hat.style===1){R(8,0,16,7,m);R(8,6,16,2,sd);for(let x=9;x<23;x+=3)R(x,1,1,5,sd);R(14,-1,4,2,H.sole);}
+   else{for(let i=0;i<7;i++)R(14-i*2,-1+i,4+i*4,1,i%2?sd:m);R(2,6,28,1,sd);}}
  });
 }
 
@@ -391,7 +436,13 @@ const ICONS={
  charm:r=>{r(7,1,2,3,'#b08a4a');r(4,4,8,8,'#a0ead4');r(5,5,3,3,'#e9fff6');r(6,12,4,2,'#5fb39f');},
  shoes:r=>{r(1,8,7,5,'#c23b3b');r(1,12,8,2,'#f4f1e6');r(8,7,7,6,'#c23b3b');r(8,12,8,2,'#f4f1e6');r(3,9,2,1,'#f4f1e6');r(10,8,2,1,'#f4f1e6');},
  hat:r=>{r(3,4,10,6,'#2e5fa8');r(2,9,13,2,'#2e5fa8');r(12,10,4,2,'#244c88');r(6,5,3,2,'#5e95e8');},
+ home:r=>{r(1,4,14,8,'#a0ead4');r(1,4,14,1,'#e9fff6');r(11,4,1,8,'#5fb39f');r(4,6,1,4,'#1d4a3e');r(3,7,3,1,'#1d4a3e');r(4,6,4,1,'#1d4a3e');r(7,6,1,3,'#1d4a3e');},
+ lens:r=>{r(3,2,7,7,'#cfe8ff');r(4,3,5,5,'#e9f6ff');r(2,3,1,5,'#9fb3c2');r(10,3,1,5,'#9fb3c2');r(3,1,7,1,'#9fb3c2');r(3,9,7,1,'#9fb3c2');r(9,9,2,2,'#8a5a32');r(11,11,2,2,'#8a5a32');r(12,12,3,3,'#6a4022');r(5,4,2,1,'#ffffff');},
+ hammer:r=>{r(2,2,9,5,'#9fb3c2');r(2,2,9,1,'#e6e9e4');r(10,3,3,3,'#6d8295');r(5,7,3,8,'#8a5a32');r(5,7,1,8,'#a8743e');},
+ gem:r=>{r(5,2,6,2,'#ffffff');r(3,4,10,3,'#e6e9e4');r(4,7,8,3,'#c4ccd4');r(6,10,4,3,'#9aa6b0');r(7,13,2,1,'#9aa6b0');r(5,4,2,2,'#ffffff');},
  badge:r=>{r(4,2,8,8,'#e7c083');r(3,4,10,4,'#e7c083');r(6,4,4,4,'#c23b3b');r(5,10,2,5,'#2e5fa8');r(9,10,2,5,'#2e5fa8');},
 };
 export function paintIcon(name){return sprite(16,16,r=>ICONS[name](r));}
+// A gem icon in a given colour: the white gem tinted by multiply.
+export function paintGem(color){const c=paintIcon('gem'),g=c.getContext('2d');g.globalCompositeOperation='multiply';g.fillStyle=color;g.fillRect(0,0,c.width,c.height);g.globalCompositeOperation='destination-in';g.drawImage(paintIcon('gem'),0,0);return c;}
 export const ICON_NAMES=Object.keys(ICONS);

@@ -94,7 +94,7 @@ test('a Hầm Ma character survives a save and restore', () => {
   const back = restoreDungeon(new Dungeon(snap.seed), snap);
   assert.equal(back.depth, 5);
   assert.equal(back.p.level, 6); assert.equal(back.p.xp, 33); assert.equal(back.p.gold, 210);
-  assert.equal(back.keys, 2); assert.deepEqual(back.potions, {bread: 4, battery: 3});
+  assert.equal(back.keys, 2); assert.deepEqual(back.potions, {bread: 4, battery: 3, ticket: 0, lens: 0});
   assert.equal(back.equipped.torch.name, torch.name);
   assert.equal(back.inventory.length, d.inventory.length);
   assert.equal(back.companions[0].trust, 82);

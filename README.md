@@ -60,6 +60,21 @@ A haunted-house game with three ways to play:
   and blue battery bars with numbers, a level badge and status icons (keys, stamp, Vé 000, coins,
   skill points), with the quest under them. Top right: minimap. Bottom: round skill icons; right
   side: bánh bao, pin AA, Zin, skill tree and bag; a contextual action button above the skill bar.
+- **Greed:** running out of courage ends the descent. Equipped gear, levels and the coins you came
+  down with are kept; bag items and coins found on this descent are lost. Leave safely with a
+  **Vé về** (key 3, 60 xu) or the ladder at Mr. D's rest stops (floors 1, 4, 7…), the only floors
+  where it works. The next descent starts from the deepest rest stop reached.
+- **Forge:** Mr. D upgrades gear +1 to +10 (+12% base stat each). +1 to +3 always work, then the
+  odds fall from 90% to 30%, and a failure from +5 up drops a level. Hiếm items have one gem
+  socket, Huyền thoại and Bộ two; gems (Hồng ngọc, Lam ngọc, Lục bảo, Hoàng ngọc) drop from
+  performers and are set from the gear screen.
+- **Unidentified items:** Hiếm, Huyền thoại and Bộ drops show "???" and hide their affixes until a
+  Kính lúp or Mr. D identifies them; they can't be worn before that.
+- **Gear screen:** D stands in the middle wearing his gear; the seven slots are named by where they
+  go (Đầu, Cổ, Ngực, Tay, Thân, Lưng, Chân). Tap a slot to see only the bag items for it; ▲/▼ marks
+  items better or worse than what's worn.
+- **D's look:** D is a layered sprite with a walk cycle; hats, coats, the torch, bag, shoes,
+  necklace and badge change how he looks, coloured by rarity. The cats walk too.
 - **Controls:** the joystick is always there, bottom left, at 10% opacity until a thumb is on it;
   tapping the floor still walks there. The one setting is **Tự đánh** (auto-fight, in Pause): the
   flashlight fires by itself at anyone in reach. On by default on touch screens.

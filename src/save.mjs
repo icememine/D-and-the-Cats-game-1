@@ -65,22 +65,22 @@ export class SaveStore{
 // ---- Hầm Ma snapshots: plain JSON, nothing that depends on the current floor's layout.
 export function snapshotDungeon(dg){
  return{
-  seed:dg.seed,depth:dg.depth,stats:{...dg.stats},
-  character:{level:dg.p.level,xp:dg.p.xp,gold:dg.p.gold,potions:{...dg.potions},keys:dg.keys,inventory:dg.inventory.map(clone),equipped:Object.fromEntries(Object.entries(dg.equipped).map(([k,v])=>[k,v?clone(v):null])),trust:Object.fromEntries(dg.companions.map(c=>[c.id,Math.round(c.trust)])),tree:{...dg.tree},town:clone(dg.town),fragments:[...dg.fragments],zinState:dg.zinState,zinFloorDone:dg.zinFloorDone},
+  seed:dg.seed,depth:dg.depth,stats:{...dg.stats},runGold:dg.runGold||0,
+  character:{level:dg.p.level,xp:dg.p.xp,gold:dg.p.gold,potions:{...dg.potions},keys:dg.keys,inventory:dg.inventory.map(clone),equipped:Object.fromEntries(Object.entries(dg.equipped).map(([k,v])=>[k,v?clone(v):null])),trust:Object.fromEntries(dg.companions.map(c=>[c.id,Math.round(c.trust)])),tree:{...dg.tree},town:clone(dg.town),fragments:[...dg.fragments],zinState:dg.zinState,zinFloorDone:dg.zinFloorDone,gems:{...dg.gems},checkpoint:dg.checkpoint||1},
  };
 }
 // Applies a saved character (and, for an unfinished descent, the floor) to a fresh Dungeon.
-export function restoreDungeon(dg,{character,depth=1,stats=null}){
+export function restoreDungeon(dg,{character,depth=1,stats=null,runGold=0}){
  if(character){
   Object.assign(dg.p,{level:character.level||1,xp:character.xp||0,gold:character.gold||0});
-  dg.potions={bread:0,battery:0,...character.potions};dg.keys=character.keys||0;
+  dg.potions={bread:0,battery:0,ticket:0,lens:0,...character.potions};if(character.gems)dg.gems={...dg.gems,...character.gems};dg.checkpoint=character.checkpoint||1;dg.keys=character.keys||0;
   dg.inventory=(character.inventory||[]).map(clone);
   for(const k of Object.keys(dg.equipped))if(character.equipped&&k in character.equipped)dg.equipped[k]=character.equipped[k]?clone(character.equipped[k]):null;
   for(const c of dg.companions)if(character.trust?.[c.id]!=null)c.trust=character.trust[c.id];
   if(character.tree)dg.tree={...character.tree};if(character.town)dg.town={...dg.town,...clone(character.town)};
   dg.fragments=[...(character.fragments||[])];dg.zinState=character.zinState||null;dg.zinFloorDone=!!character.zinFloorDone;
  }
- if(stats)dg.stats={...dg.stats,...stats};
+ if(stats)dg.stats={...dg.stats,...stats};dg.runGold=runGold;
  const d=dg.derived;dg.p.courage=d.maxCourage;dg.p.battery=d.maxBattery;
  dg.enterFloor(depth);
  return dg;
